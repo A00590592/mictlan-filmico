@@ -147,6 +147,71 @@
     cursor: pointer; margin-top: 12px;
   }
   .btn-revivir:hover { background: #ffd54f; }
+
+  /* 📱 Ajustes responsivos para móviles */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .desktop {
+    padding: 15px;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .icon img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .window {
+    width: 95%;
+    top: 4%;
+  }
+
+  .poster-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+  }
+
+  .poster-icon img {
+    width: 140px;
+  }
+
+  .btn-revivir {
+    padding: 8px 18px;
+    font-size: 16px;
+  }
+
+  .taskbar {
+    height: 35px;
+    font-size: 12px;
+    padding: 0 8px;
+  }
+
+  .clock-display {
+    min-width: 60px;
+    font-size: 12px;
+  }
+
+  .trash-fixed {
+    bottom: 55px;
+    right: 15px;
+    width: 72px;
+    height: 90px;
+  }
+
+  .trash-fixed img {
+    width: 72px;
+    height: 72px;
+  }
+}
 </style>
 </head>
 
