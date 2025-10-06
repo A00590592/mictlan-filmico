@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Mictlán Fílmico</title>
 <link rel="stylesheet" href="https://unpkg.com/98.css" />
 <style>
@@ -148,25 +148,45 @@
   }
   .btn-revivir:hover { background: #ffd54f; }
 
- /* 📱 Ajustes responsivos para móviles */
+/* ⚙️ Ajustes globales para móviles */
+html, body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* 📱 Ajustes responsivos para móviles (columna izquierda activa, derecha vacía y sin zoom) */
 @media (max-width: 768px) {
   body {
     font-size: 14px;
   }
 
   .desktop {
-    padding: 15px;
-    gap: 25px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    justify-items: center;
-    align-items: start;
+    grid-template-columns: 1fr 1fr; /* crea dos columnas iguales */
+    padding: 15px 20px;
     width: 100%;
+  }
+
+  /* todos los iconos en la primera columna */
+  .desktop .icon:nth-child(odd),
+  .desktop .icon:nth-child(even) {
+    grid-column: 1; /* fuerza a todos los íconos a la primera columna */
+    justify-self: start; /* los alinea a la izquierda */
+  }
+
+  /* segunda columna vacía (solo mantiene espacio visual) */
+  .desktop::after {
+    content: "";
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
   }
 
   .icon {
     width: 64px;
     height: 64px;
+    margin-bottom: 20px;
   }
 
   .icon img {
