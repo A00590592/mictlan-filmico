@@ -155,7 +155,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* 📱 Ajustes responsivos para móviles (columna izquierda activa, derecha vacía y sin zoom) */
+/* 📱 Ajustes responsivos refinados para móviles (sin zoom y con alineación compacta) */
 @media (max-width: 768px) {
   body {
     font-size: 14px;
@@ -163,35 +163,32 @@ html, body {
 
   .desktop {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* crea dos columnas iguales */
-    padding: 15px 20px;
+    grid-template-columns: 1fr 1fr; /* dos columnas, pero usamos solo la primera */
+    padding: 10px 15px;
     width: 100%;
+    row-gap: 10px; /* reduce la separación vertical */
   }
 
-  /* todos los iconos en la primera columna */
-  .desktop .icon:nth-child(odd),
-  .desktop .icon:nth-child(even) {
-    grid-column: 1; /* fuerza a todos los íconos a la primera columna */
-    justify-self: start; /* los alinea a la izquierda */
+  /* todos los iconos van en la columna izquierda */
+  .desktop .icon {
+    grid-column: 1;
+    justify-self: start;
+    margin-bottom: 5px; /* espacio justo entre iconos */
+    width: 60px;
+    height: 60px;
   }
 
-  /* segunda columna vacía (solo mantiene espacio visual) */
+  .icon img {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* columna fantasma derecha (solo mantiene la sensación visual) */
   .desktop::after {
     content: "";
     grid-column: 2;
     width: 100%;
     height: 100%;
-  }
-
-  .icon {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 20px;
-  }
-
-  .icon img {
-    width: 64px;
-    height: 64px;
   }
 
   .window {
@@ -200,17 +197,17 @@ html, body {
   }
 
   .poster-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
   }
 
   .poster-icon img {
-    width: 140px;
+    width: 120px;
   }
 
   .btn-revivir {
-    padding: 8px 18px;
-    font-size: 16px;
+    padding: 10px 22px;
+    font-size: 18px;
   }
 
   .taskbar {
@@ -227,13 +224,13 @@ html, body {
   .trash-fixed {
     bottom: 55px;
     right: 15px;
-    width: 72px;
-    height: 90px;
+    width: 64px;
+    height: 80px;
   }
 
   .trash-fixed img {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
   }
 }
 </style>
