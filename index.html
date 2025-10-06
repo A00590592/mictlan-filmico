@@ -148,7 +148,7 @@
   }
   .btn-revivir:hover { background: #ffd54f; }
 
-  /* 📱 Ajustes responsivos para móviles */
+ /* 📱 Ajustes responsivos para móviles */
 @media (max-width: 768px) {
   body {
     font-size: 14px;
@@ -156,8 +156,12 @@
 
   .desktop {
     padding: 15px;
-    gap: 20px;
-    align-items: center;
+    gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    align-items: start;
+    width: 100%;
   }
 
   .icon {
