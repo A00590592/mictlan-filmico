@@ -1,0 +1,43 @@
+name: Update Log
+
+on:
+  repository_dispatch:
+    types: [revivir_event]
+
+jobs:
+  update-log:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Actualizar log
+        run: |
+          echo '${{ github.event.client_payload | toJson }}' > payload.json
+          node <<'EOF'
+          const fs = require('fs');
+          const payload = JSON.parse(fs.readFileSync('payload.json'));
+          const logPath = 'data/revivir_log.json';
+          const log = JSON.parse(fs.readFileSync(logPath));
+          log.push({
+            fecha: payload.fecha,
+            frase: payload.frase,
+            fuente: payload.fuente
+          });
+          fs.writeFileSync(logPath, JSON.stringify(log, null, 2));
+          EOF
+
+      - name: Commit y push
+        run: |
+          git config user.name "Altar Bot"
+          git config user.email "altar@users.noreply.github.com"
+          git add data/revivir_log.json
+          git commit -m "Nuevo ritual registrado"
+          git push
