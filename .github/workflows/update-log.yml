@@ -1,7 +1,8 @@
 name: 📜 Registrar Revivir
 
 on:
-  repository_dispatch:
+  workflow_dispatch:     # 🔹 permite ejecutarlo manualmente desde GitHub
+  repository_dispatch:   # 🔹 también acepta llamadas externas (desde la web)
     types: [revivir_event]
 
 jobs:
@@ -28,6 +29,10 @@ jobs:
             echo "[]" > "$FILE"
           fi
 
+          # Asegurar que jq esté instalado
+          sudo apt-get update
+          sudo apt-get install -y jq
+
           cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
           mv tmp.json "$FILE"
 
@@ -36,6 +41,5 @@ jobs:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
         run: |
           git add data/revivir_log.json
-          git commit -m "🕯️ Nuevo revivir registrado"
+          git commit -m "🕯️ Nuevo revivir registrado" || echo "Sin cambios que registrar"
           git push https://x-access-token:${ALTAR_TOKEN}@github.com/${{ github.repository }}.git
-
