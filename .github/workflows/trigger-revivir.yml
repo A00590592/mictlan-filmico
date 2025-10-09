@@ -1,6 +1,10 @@
 name: 🔔 Activar Revivir
 
 on:
+  # Permite ejecución manual desde la pestaña "Actions"
+  workflow_dispatch:
+
+  # Permite activación remota desde la web (index.html)
   repository_dispatch:
     types: [revivir_trigger]
 
