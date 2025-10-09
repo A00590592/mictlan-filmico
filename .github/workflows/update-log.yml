@@ -1,8 +1,8 @@
 name: 📜 Registrar Revivir
 
 on:
-  workflow_dispatch:     # 🔹 permite ejecutarlo manualmente desde GitHub
-  repository_dispatch:   # 🔹 también acepta llamadas externas (desde la web)
+  workflow_dispatch:    # permite ejecutarlo manualmente desde GitHub
+  repository_dispatch:  # también permite invocaciones desde la web
     types: [revivir_event]
 
 jobs:
@@ -29,14 +29,13 @@ jobs:
             echo "[]" > "$FILE"
           fi
 
-          # Asegurar que jq esté instalado
           sudo apt-get update
           sudo apt-get install -y jq
 
           cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
           mv tmp.json "$FILE"
 
-    - name: 💾 Guardar cambios
+      - name: 💾 Guardar cambios
         env:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
         run: |
