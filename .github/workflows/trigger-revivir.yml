@@ -1,0 +1,35 @@
+name: 🔔 Activar Revivir
+
+on:
+  workflow_dispatch:        # puedes lanzarlo manualmente
+  repository_dispatch:      # o desde la web
+    types: [revivir_trigger]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🪶 Clonar repo
+        uses: actions/checkout@v4
+
+      - name: 🕯️ Publicar al altar
+        env:
+          MQTT_USER: ${{ secrets.ALTAR_USER }}
+          MQTT_PASS: ${{ secrets.ALTAR_PASS }}
+          MQTT_HOST: ${{ secrets.ALTAR_HOST }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y mosquitto-clients
+          mosquitto_pub -h "$MQTT_HOST" -p 8883 -u "$MQTT_USER" -P "$MQTT_PASS" \
+            -t "Mictlan" -m "revivir" --cafile /etc/ssl/certs/ca-certificates.crt
+          echo "✅ Revivir enviado al altar"
+
+      - name: 📜 Registrar revivir
+        run: |
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          mkdir -p data
+          echo "{\"mensaje\":\"Revivir desde web - $DATE\"}" >> data/revivir_log.json
+          git config --global user.email "altar@mictlan.io"
+          git config --global user.name "Altar Mictlan"
+          git add data/revivir_log.json
+          git commit -m "🕯️ Revivir registrado"
+          git push
