@@ -1,19 +1,25 @@
-name: 🔔 Activar Revivir
+name: 🔥 Activar Revivir
 
 on:
-  workflow_dispatch:      # Permite ejecutarlo manualmente
-  repository_dispatch:
-    types: [revivir_trigger]
-
-permissions:
-  contents: read
+  workflow_dispatch:
 
 jobs:
-  mqtt:
+  send_signal:
     runs-on: ubuntu-latest
     steps:
-      - name: 🚀 Enviar señal al altar (MQTT)
+      - name: 🪶 Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Instalar cliente MQTT
+        run: sudo apt-get update && sudo apt-get install -y mosquitto-clients
+
+      - name: 🕯️ Configurar Git (opcional)
+        run: |
+          git config --global user.name "Altar Mictlan"
+          git config --global user.email "altar@mictlan.io"
+
+      - name: 🚀 Enviar señal al altar físico
         run: |
           echo "🪔 Enviando señal al altar físico..."
-          mosquitto_pub -h "broker.hivemq.com" -p 1883 -t "mictlan/altar" -m "revivir" -q 1
-          echo "✅ Señal enviada con éxito."
+          mosquitto_pub -h "broker.hivemq.com" -p 1883 -t "Mictlan" -m "revivir" -q 1
+
