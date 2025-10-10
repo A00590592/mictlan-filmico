@@ -1,10 +1,9 @@
 name: 🔔 Activar Revivir (rápido)
 
 on:
-  # Permite ejecución manual desde Actions
+  # Para lanzarlo manualmente desde Actions
   workflow_dispatch:
-
-  # Permite activación remota desde index.html
+  # Para detonarlo desde la web (index.html) con repository_dispatch
   repository_dispatch:
     types: [revivir_trigger]
 
@@ -12,31 +11,31 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: 🕯️ Enviar señal al altar (paho-mqtt)
+      - name: ⚙️ Instalar paho-mqtt (ligero)
+        run: pip install --quiet paho-mqtt
+
+      - name: 🕯️ Enviar señal al altar (TLS + auth)
         env:
           MQTT_USER: ${{ secrets.ALTAR_USER }}
           MQTT_PASS: ${{ secrets.ALTAR_PASS }}
           MQTT_HOST: ${{ secrets.ALTAR_HOST }}
         run: |
-          echo "🪔 Preparando envío MQTT con Python..."
           python3 - <<'PYCODE'
-import paho.mqtt.publish as publish, ssl, os
+import os, ssl
+import paho.mqtt.publish as publish
 
-host = os.getenv("MQTT_HOST")
-user = os.getenv("MQTT_USER")
-password = os.getenv("MQTT_PASS")
-topic = "Mictlan"
-message = "revivir"
+host = os.environ["MQTT_HOST"]
+user = os.environ["MQTT_USER"]
+pwd  = os.environ["MQTT_PASS"]
 
-print(f"📡 Publicando '{message}' en {host} ...")
 publish.single(
-    topic,
-    payload=message,
-    qos=0,
+    topic="Mictlan",
+    payload="revivir",
     hostname=host,
     port=8883,
-    auth={"username": user, "password": password},
-    tls={"cert_reqs": ssl.CERT_NONE}
+    qos=0,
+    auth={"username": user, "password": pwd},
+    tls={"cert_reqs": ssl.CERT_NONE}  # HiveMQ Cloud con CA pública; CERT_NONE evita fallar por cert
 )
-print("✅ Señal enviada correctamente al altar físico.")
+print("✅ Señal 'revivir' publicada")
 PYCODE
