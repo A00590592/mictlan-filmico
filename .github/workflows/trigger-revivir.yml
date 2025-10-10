@@ -9,7 +9,7 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: ⚙️ Instalar paho-mqtt
+      - name: ⚙️ Instalar paho-mqtt (ligero)
         run: pip install --quiet paho-mqtt
 
       - name: 🕯️ Enviar señal al altar (TLS + auth)
@@ -17,25 +17,22 @@ jobs:
           MQTT_USER: ${{ secrets.ALTAR_USER }}
           MQTT_PASS: ${{ secrets.ALTAR_PASS }}
           MQTT_HOST: ${{ secrets.ALTAR_HOST }}
+        shell: python
         run: |
-          python3 - <<'PYCODE'
-import os
-import ssl
-import paho.mqtt.publish as publish
+          import os, ssl
+          import paho.mqtt.publish as publish
 
-host = os.getenv("MQTT_HOST")
-user = os.getenv("MQTT_USER")
-pwd = os.getenv("MQTT_PASS")
+          host = os.environ["MQTT_HOST"]
+          user = os.environ["MQTT_USER"]
+          pwd  = os.environ["MQTT_PASS"]
 
-print(f"📡 Publicando 'revivir' en {host} ...")
-publish.single(
-    topic="Mictlan",
-    payload="revivir",
-    qos=0,
-    hostname=host,
-    port=8883,
-    auth={"username": user, "password": pwd},
-    tls={"cert_reqs": ssl.CERT_NONE}
-)
-print("✅ Señal 'revivir' enviada correctamente.")
-PYCODE
+          publish.single(
+              topic="Mictlan",
+              payload="revivir",
+              qos=0,
+              hostname=host,
+              port=8883,
+              auth={"username": user, "password": pwd},
+              tls={"cert_reqs": ssl.CERT_NONE}
+          )
+          print("✅ Señal 'revivir' publicada")
