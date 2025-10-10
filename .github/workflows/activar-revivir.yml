@@ -1,0 +1,58 @@
+name: 🔔 Activar Revivir + Registrar Log
+
+on:
+  # Permite activarlo desde la pestaña Actions
+  workflow_dispatch:
+
+  # Permite activarlo desde la web (index.html o API)
+  repository_dispatch:
+    types: [revivir_trigger]
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🪔 Enviar señal al altar físico (MQTT)
+        env:
+          MQTT_USER: ${{ secrets.ALTAR_USER }}
+          MQTT_PASS: ${{ secrets.ALTAR_PASS }}
+          MQTT_HOST: ${{ secrets.ALTAR_HOST }}
+        run: |
+          echo "✨ Enviando 'revivir' al altar físico..."
+          sudo apt-get update -qq
+          sudo apt-get install -y mosquitto-clients
+          mosquitto_pub -h "$MQTT_HOST" -p 8883 \
+            -u "$MQTT_USER" -P "$MQTT_PASS" \
+            -t "Mictlan" -m "revivir" \
+            --cafile /etc/ssl/certs/ca-certificates.crt
+          echo "✅ Señal enviada correctamente."
+
+      - name: 📜 Actualizar log local
+        run: |
+          echo "🕯️ Registrando revivir en log local..."
+          mkdir -p data
+          FILE=data/revivir_log.json
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          MSG="Revivir desde la web - $DATE"
+
+          if [ ! -f "$FILE" ]; then
+            echo "[]" > "$FILE"
+          fi
+
+          cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
+          mv tmp.json "$FILE"
+          echo "💾 Log actualizado correctamente."
+
+      - name: 💾 Subir cambios a GitHub
+        env:
+          ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
+        run: |
+          echo "📤 Subiendo nuevo registro al repositorio..."
+          git config --global user.name "Altar Mictlan"
+          git config --global user.email "altar@mictlan.io"
+          git pull origin main --rebase
+          git add data/revivir_log.json
+          git commit -m "🕯️ Nuevo revivir registrado desde la web"
+          git push https://x-access-token:${ALTAR_TOKEN}@github.com/A00590592/mictlan-filmico.git
+          echo "✅ Registro completado con éxito."
