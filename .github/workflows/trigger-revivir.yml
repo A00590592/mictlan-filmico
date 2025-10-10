@@ -1,25 +1,42 @@
-name: 🔥 Activar Revivir
+name: 🔔 Activar Revivir (rápido)
 
 on:
+  # Permite ejecución manual desde Actions
   workflow_dispatch:
 
+  # Permite activación remota desde index.html
+  repository_dispatch:
+    types: [revivir_trigger]
+
 jobs:
-  send_signal:
+  trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: 🪶 Clonar repositorio
-        uses: actions/checkout@v4
-
-      - name: ⚙️ Instalar cliente MQTT
-        run: sudo apt-get update && sudo apt-get install -y mosquitto-clients
-
-      - name: 🕯️ Configurar Git (opcional)
+      - name: 🕯️ Enviar señal al altar (paho-mqtt)
+        env:
+          MQTT_USER: ${{ secrets.ALTAR_USER }}
+          MQTT_PASS: ${{ secrets.ALTAR_PASS }}
+          MQTT_HOST: ${{ secrets.ALTAR_HOST }}
         run: |
-          git config --global user.name "Altar Mictlan"
-          git config --global user.email "altar@mictlan.io"
+          echo "🪔 Preparando envío MQTT con Python..."
+          python3 - <<'PYCODE'
+import paho.mqtt.publish as publish, ssl, os
 
-      - name: 🚀 Enviar señal al altar físico
-        run: |
-          echo "🪔 Enviando señal al altar físico..."
-          mosquitto_pub -h "broker.hivemq.com" -p 1883 -t "Mictlan" -m "revivir" -q 1
+host = os.getenv("MQTT_HOST")
+user = os.getenv("MQTT_USER")
+password = os.getenv("MQTT_PASS")
+topic = "Mictlan"
+message = "revivir"
 
+print(f"📡 Publicando '{message}' en {host} ...")
+publish.single(
+    topic,
+    payload=message,
+    qos=0,
+    hostname=host,
+    port=8883,
+    auth={"username": user, "password": password},
+    tls={"cert_reqs": ssl.CERT_NONE}
+)
+print("✅ Señal enviada correctamente al altar físico.")
+PYCODE
