@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "🐍 Ejecutando ritual de revivir..."
           python3 - <<'EOF'
-import os, ssl, json, socket, time
+import os, ssl, json, socket
 from datetime import datetime
 
 # ========= CONFIG =========
@@ -47,7 +47,6 @@ def publish_mqtt(host, port, user, pwd, topic, msg):
         return True
     except Exception as e:
         print(f"⚠️ No se pudo usar paho-mqtt: {e}")
-        # Fallback directo con socket SSL
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             ssl_sock = ssl.wrap_socket(s)
