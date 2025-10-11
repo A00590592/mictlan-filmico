@@ -9,18 +9,18 @@ jobs:
   altar_revivir:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: Checkout repo
+      uses: actions/checkout@v4
 
-      - name: Enviar MQTT (sin dependencias) y registrar log
-        env:
-          MQTT_USER: ${{ secrets.ALTAR_USER }}
-          MQTT_PASS: ${{ secrets.ALTAR_PASS }}
-          MQTT_HOST: ${{ secrets.ALTAR_HOST }}
-        run: |
-          set -e
-          mkdir -p data
-          cat > send_mqtt_and_log.py << 'PY'
+    - name: Enviar MQTT (sin dependencias) y registrar log
+      env:
+        MQTT_USER: ${{ secrets.ALTAR_USER }}
+        MQTT_PASS: ${{ secrets.ALTAR_PASS }}
+        MQTT_HOST: ${{ secrets.ALTAR_HOST }}
+      run: |
+        set -e
+        mkdir -p data
+        cat > send_mqtt_and_log.py << 'PY'
 import os, ssl, socket, json
 from datetime import datetime
 
@@ -74,8 +74,10 @@ def publish_tls(host, port, user, pwd, topic, msg):
         with ctx.wrap_socket(raw, server_hostname=host) as s:
             s.sendall(pkt_connect(CLIENT_ID, user, pwd))
             s.sendall(pkt_publish(topic, msg))
-            try: s.sendall(pkt_disconnect())
-            except: pass
+            try:
+                s.sendall(pkt_disconnect())
+            except:
+                pass
     print("✅ MQTT enviado.")
 
 def append_log(path, message):
@@ -100,14 +102,14 @@ def main():
 if __name__ == "__main__":
     main()
 PY
-          python3 send_mqtt_and_log.py
+        python3 send_mqtt_and_log.py
 
-      - name: Commit & push log
-        env:
-          ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
-        run: |
-          git config --global user.name "Altar Mictlan"
-          git config --global user.email "altar@mictlan.io"
-          git add data/revivir_log.json
-          git commit -m "Revivir registrado (workflow unificado rápido)" || echo "Nada que commitear"
-          git push https://x-access-token:${ALTAR_TOKEN}@github.com/${{ github.repository }}.git
+    - name: Commit & push log
+      env:
+        ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
+      run: |
+        git config --global user.name "Altar Mictlan"
+        git config --global user.email "altar@mictlan.io"
+        git add data/revivir_log.json
+        git commit -m "Revivir registrado (workflow unificado rápido)" || echo "Nada que commitear"
+        git push https://x-access-token:${ALTAR_TOKEN}@github.com/${{ github.repository }}.git
