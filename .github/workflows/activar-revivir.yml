@@ -12,97 +12,69 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - name: Enviar MQTT (sin dependencias) y registrar log
+    - name: Ejecutar Python para MQTT y log
       env:
         MQTT_USER: ${{ secrets.ALTAR_USER }}
         MQTT_PASS: ${{ secrets.ALTAR_PASS }}
         MQTT_HOST: ${{ secrets.ALTAR_HOST }}
+      shell: python
       run: |
-        set -e
-        mkdir -p data
-        cat > send_mqtt_and_log.py << 'PY'
-import os, ssl, socket, json
-from datetime import datetime
+        import os, ssl, socket, json
+        from datetime import datetime, timezone, timedelta
+        print("🚀 Iniciando secuencia de revivir...")
+        host = os.environ["MQTT_HOST"]
+        port = 8883
+        user = os.environ["MQTT_USER"]
+        pwd  = os.environ["MQTT_PASS"]
+        topic = "Mictlan"
+        payload = "revivir"
+        log_file = "data/revivir_log.json"
+        client_id = "GHActions-" + datetime.utcnow().strftime("%Y%m%d%H%M%S")
 
-HOST = os.environ["MQTT_HOST"]
-PORT = 8883
-USER = os.environ["MQTT_USER"]
-PWD  = os.environ["MQTT_PASS"]
-TOPIC = "Mictlan"
-PAYLOAD = "revivir"
-LOG_FILE = "data/revivir_log.json"
-CLIENT_ID = "GHActions-" + datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        def enc_utf8(s):
+            b = s.encode("utf-8")
+            return len(b).to_bytes(2,"big")+b
+        def enc_varint(n):
+            out=bytearray()
+            while True:
+                b=n%128
+                n//=128
+                if n>0: b|=0x80
+                out.append(b)
+                if n==0: break
+            return bytes(out)
+        def pkt_connect(cid,u,p,keepalive=60):
+            vh=enc_utf8("MQTT")+bytes([4])+bytes([0xC2])+keepalive.to_bytes(2,"big")
+            payload=enc_utf8(cid)+enc_utf8(u)+enc_utf8(p)
+            rl=enc_varint(len(vh)+len(payload))
+            return bytes([0x10])+rl+vh+payload
+        def pkt_publish(t,m):
+            vh=enc_utf8(t); pl=m.encode(); rl=enc_varint(len(vh)+len(pl))
+            return bytes([0x30])+rl+vh+pl
+        def pkt_disconnect(): return b"\xE0\x00"
 
-def enc_utf8(s):
-    b = s.encode("utf-8")
-    return len(b).to_bytes(2, "big") + b
+        ctx=ssl.create_default_context()
+        ctx.check_hostname=False
+        ctx.verify_mode=ssl.CERT_NONE
+        with socket.create_connection((host,port),timeout=5) as raw:
+            with ctx.wrap_socket(raw,server_hostname=host) as s:
+                s.sendall(pkt_connect(client_id,user,pwd))
+                s.sendall(pkt_publish(topic,payload))
+                try: s.sendall(pkt_disconnect())
+                except: pass
+        print("✅ Señal MQTT enviada")
 
-def enc_varint(n):
-    out = bytearray()
-    while True:
-        b = n % 128
-        n //= 128
-        if n > 0:
-            b |= 0x80
-        out.append(b)
-        if n == 0:
-            break
-    return bytes(out)
-
-def pkt_connect(cid, u, p, keepalive=60):
-    vh = enc_utf8("MQTT") + bytes([4])
-    flags = 0xC2
-    vh += bytes([flags]) + keepalive.to_bytes(2, "big")
-    payload = enc_utf8(cid) + enc_utf8(u) + enc_utf8(p)
-    rl = enc_varint(len(vh) + len(payload))
-    return bytes([0x10]) + rl + vh + payload
-
-def pkt_publish(t, m):
-    vh = enc_utf8(t)
-    pl = m.encode("utf-8")
-    rl = enc_varint(len(vh) + len(pl))
-    return bytes([0x30]) + rl + vh + pl
-
-def pkt_disconnect():
-    return b"\xE0\x00"
-
-def publish_tls(host, port, user, pwd, topic, msg):
-    ctx = ssl.create_default_context()
-    ctx.check_hostname = False
-    ctx.verify_mode = ssl.CERT_NONE
-    with socket.create_connection((host, port), timeout=5) as raw:
-        with ctx.wrap_socket(raw, server_hostname=host) as s:
-            s.sendall(pkt_connect(CLIENT_ID, user, pwd))
-            s.sendall(pkt_publish(topic, msg))
+        os.makedirs("data",exist_ok=True)
+        data=[]
+        if os.path.exists(log_file):
             try:
-                s.sendall(pkt_disconnect())
-            except:
-                pass
-    print("✅ MQTT enviado.")
-
-def append_log(path, message):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    data = []
-    if os.path.exists(path):
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        except Exception:
-            data = []
-    entry = {"mensaje": message, "ts": datetime.utcnow().isoformat() + "Z"}
-    data.append(entry)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    print("📜 Log actualizado.")
-
-def main():
-    publish_tls(HOST, PORT, USER, PWD, TOPIC, PAYLOAD)
-    append_log(LOG_FILE, "Revivir desde la web")
-
-if __name__ == "__main__":
-    main()
-PY
-        python3 send_mqtt_and_log.py
+                with open(log_file,"r",encoding="utf-8") as f: data=json.load(f)
+            except Exception: data=[]
+        entry={"mensaje":"Revivir desde la web","ts":datetime.utcnow().isoformat()+"Z"}
+        data.append(entry)
+        with open(log_file,"w",encoding="utf-8") as f:
+            json.dump(data,f,ensure_ascii=False,indent=2)
+        print("📜 Log actualizado:",log_file)
 
     - name: Commit & push log
       env:
@@ -111,5 +83,5 @@ PY
         git config --global user.name "Altar Mictlan"
         git config --global user.email "altar@mictlan.io"
         git add data/revivir_log.json
-        git commit -m "Revivir registrado (workflow unificado rápido)" || echo "Nada que commitear"
+        git commit -m "🕯️ Revivir registrado (flujo unificado optimizado)" || echo "Nada que commitear"
         git push https://x-access-token:${ALTAR_TOKEN}@github.com/${{ github.repository }}.git
