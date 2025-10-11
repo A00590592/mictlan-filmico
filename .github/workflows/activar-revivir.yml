@@ -1,4 +1,4 @@
-name: Revivir Rápido Unificado
+name: 🔔 Activar Revivir (flujo unificado optimizado)
 
 on:
   workflow_dispatch:
@@ -6,82 +6,79 @@ on:
     types: [revivir_trigger]
 
 jobs:
-  altar_revivir:
+  activar_revivir:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+      - name: 🪶 Clonar repositorio
+        uses: actions/checkout@v4
 
-    - name: Ejecutar Python para MQTT y log
-      env:
-        MQTT_USER: ${{ secrets.ALTAR_USER }}
-        MQTT_PASS: ${{ secrets.ALTAR_PASS }}
-        MQTT_HOST: ${{ secrets.ALTAR_HOST }}
-      shell: python
-      run: |
-        import os, ssl, socket, json
-        from datetime import datetime, timezone, timedelta
-        print("🚀 Iniciando secuencia de revivir...")
-        host = os.environ["MQTT_HOST"]
-        port = 8883
-        user = os.environ["MQTT_USER"]
-        pwd  = os.environ["MQTT_PASS"]
-        topic = "Mictlan"
-        payload = "revivir"
-        log_file = "data/revivir_log.json"
-        client_id = "GHActions-" + datetime.utcnow().strftime("%Y%m%d%H%M%S")
+      - name: 🕯️ Enviar señal al altar (MQTT directo sin TLS)
+        env:
+          MQTT_HOST: ${{ secrets.ALTAR_HOST }}
+          MQTT_USER: ${{ secrets.ALTAR_USER }}
+          MQTT_PASS: ${{ secrets.ALTAR_PASS }}
+        run: |
+          python3 - <<'EOF'
+          import socket, struct, time
 
-        def enc_utf8(s):
-            b = s.encode("utf-8")
-            return len(b).to_bytes(2,"big")+b
-        def enc_varint(n):
-            out=bytearray()
-            while True:
-                b=n%128
-                n//=128
-                if n>0: b|=0x80
-                out.append(b)
-                if n==0: break
-            return bytes(out)
-        def pkt_connect(cid,u,p,keepalive=60):
-            vh=enc_utf8("MQTT")+bytes([4])+bytes([0xC2])+keepalive.to_bytes(2,"big")
-            payload=enc_utf8(cid)+enc_utf8(u)+enc_utf8(p)
-            rl=enc_varint(len(vh)+len(payload))
-            return bytes([0x10])+rl+vh+payload
-        def pkt_publish(t,m):
-            vh=enc_utf8(t); pl=m.encode(); rl=enc_varint(len(vh)+len(pl))
-            return bytes([0x30])+rl+vh+pl
-        def pkt_disconnect(): return b"\xE0\x00"
+          def pkt_connect(client_id, user, pwd):
+              vh = b'\x00\x04MQTT\x04\x02\x00<\x00'
+              pl = (
+                  struct.pack('!H', len(client_id)) + client_id.encode() +
+                  struct.pack('!H', len(user)) + user.encode() +
+                  struct.pack('!H', len(pwd)) + pwd.encode()
+              )
+              rl = len(vh) + len(pl)
+              return b'\x10' + bytes([rl]) + vh + pl
 
-        ctx=ssl.create_default_context()
-        ctx.check_hostname=False
-        ctx.verify_mode=ssl.CERT_NONE
-        with socket.create_connection((host,port),timeout=5) as raw:
-            with ctx.wrap_socket(raw,server_hostname=host) as s:
-                s.sendall(pkt_connect(client_id,user,pwd))
-                s.sendall(pkt_publish(topic,payload))
-                try: s.sendall(pkt_disconnect())
-                except: pass
-        print("✅ Señal MQTT enviada")
+          def pkt_publish(topic, msg):
+              pl = struct.pack('!H', len(topic)) + topic.encode() + msg.encode()
+              rl = len(pl)
+              return b'\x30' + bytes([rl]) + pl
 
-        os.makedirs("data",exist_ok=True)
-        data=[]
-        if os.path.exists(log_file):
-            try:
-                with open(log_file,"r",encoding="utf-8") as f: data=json.load(f)
-            except Exception: data=[]
-        entry={"mensaje":"Revivir desde la web","ts":datetime.utcnow().isoformat()+"Z"}
-        data.append(entry)
-        with open(log_file,"w",encoding="utf-8") as f:
-            json.dump(data,f,ensure_ascii=False,indent=2)
-        print("📜 Log actualizado:",log_file)
+          def pkt_disconnect():
+              return b'\xe0\x00'
 
-    - name: Commit & push log
-      env:
-        ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
-      run: |
-        git config --global user.name "Altar Mictlan"
-        git config --global user.email "altar@mictlan.io"
-        git add data/revivir_log.json
-        git commit -m "🕯️ Revivir registrado (flujo unificado optimizado)" || echo "Nada que commitear"
-        git push https://x-access-token:${ALTAR_TOKEN}@github.com/${{ github.repository }}.git
+          host = "${MQTT_HOST}"
+          port = 1883
+          user = "${MQTT_USER}"
+          pwd  = "${MQTT_PASS}"
+          topic = "Mictlan"
+          payload = "revivir"
+          client_id = f"GitHubAction_{int(time.time())}"
+
+          try:
+              with socket.create_connection((host, port), timeout=5) as s:
+                  s.sendall(pkt_connect(client_id, user, pwd))
+                  s.sendall(pkt_publish(topic, payload))
+                  s.sendall(pkt_disconnect())
+              print("✅ Señal de revivir enviada al altar físico.")
+          except Exception as e:
+              print("❌ Error al enviar MQTT:", e)
+          EOF
+
+      - name: 📅 Registrar evento en el log
+        run: |
+          echo "🪶 Registrando evento en data/revivir_log.json..."
+          mkdir -p data
+          FILE=data/revivir_log.json
+          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          MSG="Revivir ejecutado desde workflow - $DATE"
+          if [ ! -f "$FILE" ]; then
+            echo "[]" > "$FILE"
+          fi
+          cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
+          mv tmp.json "$FILE"
+
+      - name: 💾 Commit & push log actualizado
+        env:
+          ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          git config --global user.name "Altar Mictlan"
+          git config --global user.email "altar@mictlan.io"
+          git remote set-url origin https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git
+          git add data/revivir_log.json
+          git commit -m "🕯️ Revivir registrado (flujo unificado optimizado)" || echo "Nada que commitear"
+          git push origin main
+          echo "🪶 Registro completado con éxito y altar encendido."
