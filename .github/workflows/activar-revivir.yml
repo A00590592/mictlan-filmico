@@ -20,7 +20,6 @@ jobs:
         run: |
           set -e
           mkdir -p data
-
           cat > send_mqtt_and_log.py << 'PY'
 import os, ssl, socket, json
 from datetime import datetime
@@ -34,11 +33,11 @@ PAYLOAD = "revivir"
 LOG_FILE = "data/revivir_log.json"
 CLIENT_ID = "GHActions-" + datetime.utcnow().strftime("%Y%m%d%H%M%S")
 
-def enc_utf8(s: str) -> bytes:
+def enc_utf8(s):
     b = s.encode("utf-8")
     return len(b).to_bytes(2, "big") + b
 
-def enc_varint(n: int) -> bytes:
+def enc_varint(n):
     out = bytearray()
     while True:
         b = n % 128
@@ -50,50 +49,36 @@ def enc_varint(n: int) -> bytes:
             break
     return bytes(out)
 
-def pkt_connect(client_id: str, username: str, password: str, keepalive: int = 60) -> bytes:
-    # Variable header
-    vh = enc_utf8("MQTT") + bytes([4])  # Protocol Level 4 (MQTT 3.1.1)
-    flags = 0xC2  # user name + password + clean session
+def pkt_connect(cid, u, p, keepalive=60):
+    vh = enc_utf8("MQTT") + bytes([4])
+    flags = 0xC2
     vh += bytes([flags]) + keepalive.to_bytes(2, "big")
-    # Payload
-    payload = enc_utf8(client_id) + enc_utf8(username) + enc_utf8(password)
+    payload = enc_utf8(cid) + enc_utf8(u) + enc_utf8(p)
     rl = enc_varint(len(vh) + len(payload))
-    return bytes([0x10]) + rl + vh + payload  # 0x10 = CONNECT
+    return bytes([0x10]) + rl + vh + payload
 
-def pkt_publish(topic: str, payload: str) -> bytes:
-    vh = enc_utf8(topic)  # QoS 0 (no packet id)
-    pl = payload.encode("utf-8")
+def pkt_publish(t, m):
+    vh = enc_utf8(t)
+    pl = m.encode("utf-8")
     rl = enc_varint(len(vh) + len(pl))
-    return bytes([0x30]) + rl + vh + pl  # 0x30 = PUBLISH QoS0
+    return bytes([0x30]) + rl + vh + pl
 
-def pkt_disconnect() -> bytes:
+def pkt_disconnect():
     return b"\xE0\x00"
 
-def recv_connack(sock) -> None:
-    sock.settimeout(3)
-    hdr = sock.recv(4)  # esperado: 0x20 0x02 0x00 0x00 (session present=0, rc=0)
-    # No lanzamos error si el broker manda más/menos bytes; objetivo es tolerante.
-
-def publish_tls(host: str, port: int, user: str, pwd: str, topic: str, msg: str) -> None:
+def publish_tls(host, port, user, pwd, topic, msg):
     ctx = ssl.create_default_context()
-    # Si tu broker usa CA pública válida, puedes dejar verificación ON:
     ctx.check_hostname = False
     ctx.verify_mode = ssl.CERT_NONE
-
     with socket.create_connection((host, port), timeout=5) as raw:
         with ctx.wrap_socket(raw, server_hostname=host) as s:
             s.sendall(pkt_connect(CLIENT_ID, user, pwd))
-            try:
-                recv_connack(s)
-            except Exception:
-                pass  # seguimos: algunos brokers responden diferente / tardan
             s.sendall(pkt_publish(topic, msg))
-            try:
-                s.sendall(pkt_disconnect())
-            except Exception:
-                pass
+            try: s.sendall(pkt_disconnect())
+            except: pass
+    print("✅ MQTT enviado.")
 
-def append_log(path: str, message: str) -> None:
+def append_log(path, message):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     data = []
     if os.path.exists(path):
@@ -106,17 +91,15 @@ def append_log(path: str, message: str) -> None:
     data.append(entry)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+    print("📜 Log actualizado.")
 
 def main():
-    # 1) Publicar MQTT
     publish_tls(HOST, PORT, USER, PWD, TOPIC, PAYLOAD)
-    # 2) Registrar log
     append_log(LOG_FILE, "Revivir desde la web")
 
 if __name__ == "__main__":
     main()
 PY
-
           python3 send_mqtt_and_log.py
 
       - name: Commit & push log
