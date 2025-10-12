@@ -21,23 +21,37 @@ jobs:
           python3 - <<'EOF'
           import socket, struct, time
 
-          def pkt_connect(client_id, user, pwd):
-              vh = b'\x00\x04MQTT\x04\x02\x00<\x00'
-              pl = (
-                  struct.pack('!H', len(client_id)) + client_id.encode() +
-                  struct.pack('!H', len(user)) + user.encode() +
-                  struct.pack('!H', len(pwd)) + pwd.encode()
+          def mqtt_packet(cmd, variable_header=b'', payload=b''):
+              remaining_length = len(variable_header) + len(payload)
+              rl = b''
+              while True:
+                  byte = remaining_length % 128
+                  remaining_length //= 128
+                  if remaining_length > 0:
+                      byte |= 0x80
+                  rl += struct.pack("!B", byte)
+                  if remaining_length == 0:
+                      break
+              return struct.pack("!B", cmd) + rl + variable_header + payload
+
+          def mqtt_connect(client_id, user, pwd):
+              protocol_name = b"\x00\x04MQTT"
+              protocol_level = b"\x04"
+              connect_flags = b"\xC2"  # username + password + clean session
+              keep_alive = b"\x00<"    # 60s
+              payload = (
+                  struct.pack("!H", len(client_id)) + client_id.encode() +
+                  struct.pack("!H", len(user)) + user.encode() +
+                  struct.pack("!H", len(pwd)) + pwd.encode()
               )
-              rl = len(vh) + len(pl)
-              return b'\x10' + bytes([rl]) + vh + pl
+              return mqtt_packet(0x10, protocol_name + protocol_level + connect_flags + keep_alive, payload)
 
-          def pkt_publish(topic, msg):
-              pl = struct.pack('!H', len(topic)) + topic.encode() + msg.encode()
-              rl = len(pl)
-              return b'\x30' + bytes([rl]) + pl
+          def mqtt_publish(topic, message):
+              payload = struct.pack("!H", len(topic)) + topic.encode() + message.encode()
+              return mqtt_packet(0x30, b'', payload)
 
-          def pkt_disconnect():
-              return b'\xe0\x00'
+          def mqtt_disconnect():
+              return mqtt_packet(0xE0)
 
           host = "${MQTT_HOST}"
           port = 1883
@@ -45,16 +59,17 @@ jobs:
           pwd  = "${MQTT_PASS}"
           topic = "Mictlan"
           payload = "revivir"
-          client_id = f"GitHubAction_{int(time.time())}"
+          client_id = f"GitHub_{int(time.time())}"
 
           try:
               with socket.create_connection((host, port), timeout=5) as s:
-                  s.sendall(pkt_connect(client_id, user, pwd))
-                  s.sendall(pkt_publish(topic, payload))
-                  s.sendall(pkt_disconnect())
-              print("✅ Señal de revivir enviada al altar físico.")
+                  s.sendall(mqtt_connect(client_id, user, pwd))
+                  time.sleep(0.3)
+                  s.sendall(mqtt_publish(topic, payload))
+                  s.sendall(mqtt_disconnect())
+              print("✅ Señal MQTT 'revivir' enviada correctamente.")
           except Exception as e:
-              print("❌ Error al enviar MQTT:", e)
+              print("❌ Error MQTT:", e)
           EOF
 
       - name: 📅 Registrar evento en el log
