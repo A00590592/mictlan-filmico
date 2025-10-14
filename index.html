@@ -33,6 +33,7 @@
   .icon img { width: 96px; height: 96px; image-rendering: pixelated; display: block; }
   .icon:hover { transform: scale(1.05); filter: brightness(1.15); }
 
+  /* 🌿 Ventanas con animación orgánica (todas excepto errorBox) */
   .window {
     position: fixed;
     top: 6%;
@@ -55,6 +56,7 @@
     100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
   }
 
+/* 💀 Error del alma: ahora aparece igual que las demás */
 #errorBox {
   top: 6%;
   left: 50%;
@@ -63,6 +65,11 @@
   animation: growDown 0.35s ease-out;
   transform-origin: top center;
 }
+
+  @keyframes floatDown {
+    0% { opacity: 0; transform: translateX(-50%) translateY(-15px) scale(0.9); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
 
   .window-header {
     display: flex; justify-content: space-between; align-items: center;
@@ -82,7 +89,6 @@
     border-top: 2px solid #FFF; border-left: 2px solid #FFF; border-right: 2px solid #808080; border-bottom: 2px solid #808080;
     z-index: 20;
   }
-
   .btn-back {
     border: 1px solid #000; padding: 2px 8px; background: #E0E0E0; cursor: pointer;
     box-shadow: inset 1px 1px #FFF, inset -1px -1px #808080; font-size: 14px;
@@ -97,6 +103,7 @@
 
   .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 9; }
 
+  /* ✨ Pulso + video */
   .flash {
     position: fixed; inset: 0;
     background: radial-gradient(circle, rgba(255,140,0,0.8) 0%, rgba(255,210,60,0.8) 40%, white 100%);
@@ -119,6 +126,7 @@
   }
   @keyframes fadeInVideo { from {opacity: 0;} to {opacity: 1;} }
 
+  /* 🎞️ Posters grid vertical (16-bit) */
   .poster-grid {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px; justify-items: center;
@@ -132,12 +140,104 @@
   .poster-icon img:hover { transform: scale(1.05); filter: brightness(1.15); }
   .poster-icon p { margin-top: 6px; font-size: 14px; text-align: center; }
 
+  /* 🌟 Botón Revivir grande */
   .btn-revivir {
     display: inline-block; padding: 12px 28px; font-size: 18px; font-weight: bold;
     background: #E0E0E0; border: 2px outset #fff; box-shadow: inset 2px 2px #FFF, inset -2px -2px #808080;
     cursor: pointer; margin-top: 12px;
   }
   .btn-revivir:hover { background: #ffd54f; }
+
+/* ⚙️ Ajustes globales para móviles */
+html, body {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* 📱 Ajustes responsivos refinados para móviles (sin zoom y con alineación compacta) */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .desktop {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* dos columnas, pero usamos solo la primera */
+    padding: 10px 15px;
+    width: 100%;
+    row-gap: 10px; /* reduce la separación vertical */
+  }
+
+  /* todos los iconos van en la columna izquierda */
+  .desktop .icon {
+    grid-column: 1;
+    justify-self: start;
+    margin-bottom: 5px; /* espacio justo entre iconos */
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px; /* espacio justo entre iconos */
+    width: 75px;
+    height: 75px;
+  }
+
+  .icon img {
+    width: 60px;
+    height: 60px;
+    width: 75px;
+    height: 75px;
+  }
+
+  /* columna fantasma derecha (solo mantiene la sensación visual) */
+  .desktop::after {
+    content: "";
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
+  }
+
+  .window {
+    width: 95%;
+    top: 4%;
+  }
+
+  .poster-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  .poster-icon img {
+    width: 120px;
+  }
+
+  .btn-revivir {
+    padding: 10px 22px;
+    font-size: 18px;
+  }
+
+  .taskbar {
+    height: 35px;
+    font-size: 12px;
+    padding: 0 8px;
+  }
+
+  .clock-display {
+    min-width: 60px;
+    font-size: 12px;
+  }
+
+  .trash-fixed {
+    bottom: 55px;
+    right: 15px;
+    width: 64px;
+    height: 80px;
+  }
+
+  .trash-fixed img {
+    width: 64px;
+    height: 64px;
+  }
+}
 </style>
 </head>
 
@@ -164,95 +264,152 @@
   <span id="clock" class="clock-display"></span>
 </div>
 
-<!-- 🧩 scripts -->
+<!-- 🎥 Películas Reencarnadas -->
+<div id="peliculas" class="window">
+  <div class="window-header">
+    🎥 Películas Reencarnadas
+    <div class="window-close" onclick="closeWindow('peliculas')">X</div>
+  </div>
+  <div class="window-content">
+    <div class="poster-grid">
+      <div class="poster-icon" onclick="openWindow('macarioWin')">
+        <img src="assets/macario_16v.png" alt="Macario 16-bit">
+        <p>Macario</p>
+      </div>
+      <div class="poster-icon" onclick="openWindow('mariaWin')">
+        <img src="assets/maria_16v.png" alt="María Candelaria 16-bit">
+        <p>María Candelaria</p>
+      </div>
+      <div class="poster-icon" onclick="openWindow('olvidadosWin')">
+        <img src="assets/olvidados_16v.png" alt="Los Olvidados 16-bit">
+        <p>Los olvidados</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🪔 Subventanas con botón Volver -->
+<div id="macarioWin" class="window">
+  <div class="window-header">🎞️ Macario <div class="window-close" onclick="closeWindow('macarioWin')">X</div></div>
+  <div class="window-content" style="text-align:center;">
+    <img src="assets/macario.png" width="240" alt="Macario"><br><br>
+    <p>Un campesino que cena con la Muerte y descubre el precio de la vida eterna.</p>
+    <button class="btn-revivir" onclick="revivirLuz()">✨ Revivir</button><br><br>
+    <button onclick="closeWindow('macarioWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+  </div>
+</div>
+
+<div id="mariaWin" class="window">
+  <div class="window-header">🌼 María Candelaria <div class="window-close" onclick="closeWindow('mariaWin')">X</div></div>
+  <div class="window-content" style="text-align:center;">
+    <img src="assets/maria.png" width="240" alt="María Candelaria"><br><br>
+    <p>La pureza y la tragedia en los canales de Xochimilco, donde el amor desafía el destino.</p>
+    <button class="btn-revivir" onclick="revivirLuz()">✨ Revivir</button><br><br>
+    <button onclick="closeWindow('mariaWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+  </div>
+</div>
+
+<div id="olvidadosWin" class="window">
+  <div class="window-header">🌀 Los olvidados <div class="window-close" onclick="closeWindow('olvidadosWin')">X</div></div>
+  <div class="window-content" style="text-align:center;">
+    <img src="assets/olvidados.png" width="240" alt="Los olvidados"><br><br>
+    <p>Buñuel muestra el rostro de los niños abandonados, entre el sueño y la realidad.</p>
+    <button class="btn-revivir" onclick="revivirLuz()">✨ Revivir</button><br><br>
+    <button onclick="closeWindow('olvidadosWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+  </div>
+</div>
+
+<!-- Otras ventanas -->
+<div id="altar" class="window">
+  <div class="window-header">🕯️ El Altar <div class="window-close" onclick="closeWindow('altar')">X</div></div>
+  <div class="window-content"><p>Haz clic en las velas y escucha cómo el Mictlán respira.</p></div>
+</div>
+
+<div id="manifiesto" class="window">
+  <div class="window-header">📜 Manifiesto <div class="window-close" onclick="closeWindow('manifiesto')">X</div></div>
+  <div class="window-content"><p>El Mictlán Fílmico es un altar digital donde las películas muertas se iluminan de nuevo.</p></div>
+</div>
+
+<div id="creditos" class="window">
+  <div class="window-header">💾 Créditos <div class="window-close" onclick="closeWindow('creditos')">X</div></div>
+  <div class="window-content"><p>Versión 1.0.66 | Error del alma corregido y animado arriba.</p></div>
+</div>
+
+<div id="karma" class="window">
+  <div class="window-header">📁 Mi karma <div class="window-close" onclick="closeWindow('karma')">X</div></div>
+  <div class="window-content"><p>Carpeta vacía (por ahora...)</p></div>
+</div>
+
+<div id="trash" class="window">
+  <div class="window-header">🗑️ Papelera del alma <div class="window-close" onclick="closeWindow('trash')">X</div></div>
+  <div class="window-content">
+    <ul>
+      <li>recuerdos_corruptos.txt</li>
+      <li>culpas_viejas.bak</li>
+      <li>amor_no_resuelto.tmp</li>
+    </ul>
+    <button onclick="alert('Error: no es tan fácil borrar el alma… ni el karma.')">🗑️ Borrar</button>
+  </div>
+</div>
+
+<!-- 💀 Error del alma -->
+<div id="errorBox" class="window" style="display:none;">
+  <div class="window-header">💀 Error del alma.exe <div class="window-close" onclick="closeWindow('errorBox')">X</div></div>
+  <div class="window-content"><p>El sistema ha detectado un exceso de sentimiento.</p></div>
+</div>
+
 <script>
-const windowsEls = document.querySelectorAll('.window');
-const overlay = document.getElementById('overlay');
-const videoFrame = document.getElementById('videoFrame');
-const heartbeat = document.getElementById('heartbeat');
+  const windowsEls = document.querySelectorAll('.window');
+  const overlay = document.getElementById('overlay');
+  const videoFrame = document.getElementById('videoFrame');
+  const heartbeat = document.getElementById('heartbeat');
 
-function openWindow(id) {
-  windowsEls.forEach(w => w.style.display = 'none');
-  overlay.style.display = 'block';
-  document.getElementById(id).style.display = 'block';
-}
-function closeWindow(id) {
-  document.getElementById(id).style.display = 'none';
-  overlay.style.display = 'none';
-}
-function goHome() {
-  windowsEls.forEach(w => w.style.display = 'none');
-  overlay.style.display = 'none';
-  videoFrame.style.display = 'none';
-  videoFrame.src = '';
-}
-function updateClock() {
-  const now = new Date();
-  const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  document.getElementById("clock").textContent = time;
-}
-updateClock();
-setInterval(updateClock, 1000);
-function showError() { openWindow('errorBox'); }
-
-// ✨ Ritual + activar workflows
-function revivirLuz() {
-  const flash = document.createElement('div');
-  flash.classList.add('flash');
-  document.body.appendChild(flash);
-  heartbeat.currentTime = 0;
-  heartbeat.play();
-  flash.style.animation = 'heartSync 4.8s ease-in-out forwards';
-  setTimeout(() => flash.classList.add('hold'), 3200);
-  setTimeout(() => {
-    videoFrame.src = "https://www.youtube.com/embed/WAUiHImStdI?autoplay=1";
-    videoFrame.style.display = 'block';
-    setTimeout(() => flash.remove(), 1000);
-  }, 4200);
-  activarRevivir(); // 🧩 agregado
-}
-
-// 🧩 función para detonar workflows (correcta)
-async function activarRevivir() {
-  const repo = "A00590592/mictlan-filmico";
-  const token = "ghp_xxx_TU_TOKEN_AQUI"; // ⚠️ PAT con permisos repo + workflow
-
-  const headers = {
-    "Accept": "application/vnd.github+json",
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`
-  };
-
-  const msg = document.createElement('div');
-  msg.textContent = "🕯️ El Mictlán responde…";
-  Object.assign(msg.style, {
-    position: "fixed", top: "50%", left: "50%",
-    transform: "translate(-50%, -50%)",
-    background: "rgba(255,255,255,0.85)", color: "#000",
-    padding: "10px 18px", borderRadius: "6px",
-    fontWeight: "bold", zIndex: 9999
-  });
-  document.body.appendChild(msg);
-
-  try {
-    await fetch(`https://api.github.com/repos/${repo}/actions/workflows/activar-revivir.yml/dispatches`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ ref: "main" })
-    });
-    await fetch(`https://api.github.com/repos/${repo}/actions/workflows/update-log.yml/dispatches`, {
-      method: "POST",
-      headers,
-      body: JSON.stringify({ ref: "main" })
-    });
-    msg.textContent = "💫 Ritual enviado al Mictlán.";
-    setTimeout(() => msg.remove(), 3500);
-  } catch (e) {
-    console.error(e);
-    msg.textContent = "⚠️ Error al contactar el Mictlán.";
-    setTimeout(() => msg.remove(), 3500);
+  function openWindow(id) {
+    windowsEls.forEach(w => w.style.display = 'none');
+    overlay.style.display = 'block';
+    document.getElementById(id).style.display = 'block';
   }
-}
+
+  function closeWindow(id) {
+    document.getElementById(id).style.display = 'none';
+    overlay.style.display = 'none';
+  }
+
+  function goHome() {
+    windowsEls.forEach(w => w.style.display = 'none');
+    overlay.style.display = 'none';
+    videoFrame.style.display = 'none';
+    videoFrame.src = '';
+  }
+
+  function updateClock() {
+    const now = new Date();
+    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    document.getElementById("clock").textContent = time;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  function showError() { openWindow('errorBox'); }
+
+  // ✨ Ritual: 3 latidos + luz blanca fija + video encima (sin pop-up)
+  function revivirLuz() {
+    const flash = document.createElement('div');
+    flash.classList.add('flash');
+    document.body.appendChild(flash);
+
+    heartbeat.currentTime = 0;
+    heartbeat.play();
+
+    flash.style.animation = 'heartSync 4.8s ease-in-out forwards';
+    setTimeout(() => flash.classList.add('hold'), 3200);
+
+    setTimeout(() => {
+      videoFrame.src = "https://www.youtube.com/embed/WAUiHImStdI?autoplay=1";
+      videoFrame.style.display = 'block';
+      setTimeout(() => flash.remove(), 1000);
+    }, 4200);
+  }
 </script>
 </body>
 </html>
