@@ -394,24 +394,30 @@ html, body {
 
   // 🌟 Nueva función: muestra la ventana final del ritual
   function mostrarVentanaAltar(titulo = "Película Reencarnada", enlace = "#") {
-    const ventana = document.createElement("div");
-    ventana.className = "window";
-    ventana.style.display = "block";
-    ventana.style.top = "10%";
-    ventana.style.left = "50%";
-    ventana.style.transform = "translateX(-50%)";
-    ventana.style.zIndex = 9999;
+  // 🔒 Cierra todas las ventanas abiertas antes de mostrar la nueva
+  windowsEls.forEach(w => w.style.display = 'none');
+  overlay.style.display = 'block';
 
-    ventana.innerHTML = `
-      <div class="window-header">🕯️ Ritual completado<div class="window-close" onclick="this.parentElement.parentElement.remove()">X</div></div>
-      <div class="window-content" style="text-align:center;">
-        <p>El alma de <b>${titulo}</b> ha sido reanimada.</p>
-        <button class="btn-back" onclick="window.open('${enlace}', '_blank')">🎞️ Ir a la película</button>
-        <button class="btn-back" onclick="alert('Guardado para ver después (versión beta).')">💾 Compartir para ver después</button>
-      </div>`;
+  const ventana = document.createElement("div");
+  ventana.className = "window";
+  ventana.style.display = "block";
+  ventana.style.top = "10%";
+  ventana.style.left = "50%";
+  ventana.style.transform = "translateX(-50%)";
+  ventana.style.zIndex = 9999;
+
+  ventana.innerHTML = `
+    <div class="window-header">🕯️ Ritual completado
+      <div class="window-close" onclick="this.parentElement.parentElement.remove(); overlay.style.display='none';">X</div>
+    </div>
+    <div class="window-content" style="text-align:center;">
+      <p>El alma de <b>${titulo}</b> ha sido reanimada.</p>
+      <button class="btn-back" onclick="window.open('${enlace}', '_blank')">🎞️ Ir a la película</button>
+      <button class="btn-back" onclick="alert('Guardado para ver después (versión beta).')">💾 Compartir para ver después</button>
+    </div>`;
     
-    document.body.appendChild(ventana);
-  }
+  document.body.appendChild(ventana);
+}
 
   // ✨ Ritual final: usa el backend seguro (Cloudflare Worker)
   async function revivirLuz(titulo = "Película", enlace = "#") {
