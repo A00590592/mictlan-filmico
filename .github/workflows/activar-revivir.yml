@@ -1,4 +1,4 @@
-name: 🔔 Activar Revivir 🔔
+name: 🔔 Activar Revivir (rápido)
 
 on:
   workflow_dispatch:
@@ -6,106 +6,29 @@ on:
     types: [revivir_trigger]
 
 jobs:
-  activar_revivir:
+  trigger:
     runs-on: ubuntu-latest
     steps:
-      - name: 🪶 Clonar repositorio
-        uses: actions/checkout@v4
+      - name: ⚙️ Verificar paho-mqtt (rápido)
+        run: python -m pip show paho-mqtt || python -m pip install --quiet paho-mqtt
 
-      - name: 🕯️ Enviar señal al altar (MQTT directo sin TLS)
+      - name: 🕯️ Enviar señal al altar (TLS + auth)
         env:
-          MQTT_HOST: ${{ secrets.ALTAR_HOST }}
           MQTT_USER: ${{ secrets.ALTAR_USER }}
           MQTT_PASS: ${{ secrets.ALTAR_PASS }}
+          MQTT_HOST: ${{ secrets.ALTAR_HOST }}
+        shell: python
         run: |
-          python3 - <<'EOF'
-          import socket, struct, time
+          import os, ssl
+          import paho.mqtt.publish as publish
 
-          def mqtt_packet(cmd, variable_header=b'', payload=b''):
-              remaining_length = len(variable_header) + len(payload)
-              rl = b''
-              while True:
-                  byte = remaining_length % 128
-                  remaining_length //= 128
-                  if remaining_length > 0:
-                      byte |= 0x80
-                  rl += struct.pack("!B", byte)
-                  if remaining_length == 0:
-                      break
-              return struct.pack("!B", cmd) + rl + variable_header + payload
-
-          def mqtt_connect(client_id, user, pwd):
-              protocol_name = b"\x00\x04MQTT"
-              protocol_level = b"\x04"
-              connect_flags = b"\xC2"  # username + password + clean session
-              keep_alive = b"\x00<"    # 60s
-              payload = (
-                  struct.pack("!H", len(client_id)) + client_id.encode() +
-                  struct.pack("!H", len(user)) + user.encode() +
-                  struct.pack("!H", len(pwd)) + pwd.encode()
-              )
-              return mqtt_packet(0x10, protocol_name + protocol_level + connect_flags + keep_alive, payload)
-
-          def mqtt_publish(topic, message):
-              # ✅ Corrección: separar variable header y payload
-              variable_header = struct.pack("!H", len(topic)) + topic.encode()
-              payload = message.encode()
-              return mqtt_packet(0x30, variable_header, payload)
-
-          def mqtt_disconnect():
-              return mqtt_packet(0xE0)
-
-          host = "${MQTT_HOST}"
-          port = 1883
-          user = "${MQTT_USER}"
-          pwd  = "${MQTT_PASS}"
-          topic = "Mictlan"
-          payload = "revivir"
-          client_id = f"GitHub_{int(time.time())}"
-
-          try:
-              with socket.create_connection((host, port), timeout=5) as s:
-                  s.sendall(mqtt_connect(client_id, user, pwd))
-                  time.sleep(0.3)
-                  s.sendall(mqtt_publish(topic, payload))
-                  time.sleep(0.3)  # ✅ Espera para asegurar envío
-                  s.sendall(mqtt_disconnect())
-              print("✅ Señal MQTT 'revivir' enviada correctamente.")
-          except Exception as e:
-              print("❌ Error MQTT:", e)
-          EOF
-
-      - name: 📅 Registrar evento en el log
-        run: |
-          echo "🪶 Registrando evento en data/revivir_log.json..."
-          mkdir -p data
-          FILE=data/revivir_log.json
-          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          MSG="Revivir ejecutado desde workflow - $DATE"
-          if [ ! -f "$FILE" ]; then
-            echo "[]" > "$FILE"
-          fi
-          cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
-          mv tmp.json "$FILE"
-
-      - name: 💾 Commit & push log actualizado
-        env:
-          ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
-          REPO: ${{ github.repository }}
-        run: |
-          echo "🔐 Verificando permisos del token personalizado..."
-          git config --global user.name "Altar Mictlan"
-          git config --global user.email "altar@mictlan.io"
-
-          # Asegura autenticación correcta con el token personal
-          git remote set-url origin https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git
-
-          git fetch origin main
-          git pull origin main --rebase
-
-          git add data/revivir_log.json
-          git commit -m "🕯️ Revivir registrado (flujo unificado optimizado)" || echo "Nada que commitear"
-
-          # Push con manejo explícito de errores
-          git push origin main || (echo "⚠️ Error al hacer push. Verifica permisos o protección de rama." && exit 1)
-          echo "🪶 Registro completado con éxito y altar encendido."
+          publish.single(
+              topic="Mictlan",
+              payload="revivir",
+              qos=0,
+              hostname=os.environ["MQTT_HOST"],
+              port=8883,
+              auth={"username": os.environ["MQTT_USER"], "password": os.environ["MQTT_PASS"]},
+              tls={"cert_reqs": ssl.CERT_NONE}
+          )
+          print("✅ Señal 'revivir' publicada")
