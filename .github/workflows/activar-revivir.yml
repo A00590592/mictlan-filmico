@@ -36,9 +36,15 @@ jobs:
           )
           print("✅ Señal 'revivir' publicada")
 
-      # 🔽 Aquí agregamos el paso que faltaba
-      - name: 🪶 Clonar repositorio
+      - name: 🪶 Clonar repositorio (con toda la historia)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔀 Cambiar o crear rama altar-log
+        run: |
+          git fetch origin
+          git checkout -B altar-log
 
       - name: 📅 Registrar evento en el log
         run: |
@@ -53,20 +59,17 @@ jobs:
           cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
           mv tmp.json "$FILE"
 
-      - name: 💾 Commit & push log actualizado
+      - name: 💾 Commit & push log actualizado (solo en altar-log)
         env:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
           git config --global user.name "Altar Mictlan"
           git config --global user.email "altar@mictlan.io"
-          git fetch origin main
-          git checkout main
-          git pull origin main
           git add data/revivir_log.json
           if git diff --cached --quiet; then
             echo "🔸 No hay cambios nuevos que registrar."
           else
-            git commit -m "🕯️ Nuevo revivir registrado"
-            git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git main
+            git commit -m "🕯️ Nuevo revivir registrado (rama altar-log)"
+            git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log
           fi
