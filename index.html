@@ -392,44 +392,54 @@ html, body {
 
   function showError() { openWindow('errorBox'); }
 
-// ✨ Ritual completo: conserva el efecto y envía señal segura a GitHub
-async function revivirLuz() {
-  // 🕯️ 1. Luz y sonido como antes
-  const flash = document.createElement('div');
-  flash.classList.add('flash');
-  document.body.appendChild(flash);
+  // 🌟 Nueva función: muestra la ventana final del ritual
+  function mostrarVentanaAltar(titulo = "Película Reencarnada", enlace = "#") {
+    const ventana = document.createElement("div");
+    ventana.className = "window";
+    ventana.style.display = "block";
+    ventana.style.top = "10%";
+    ventana.style.left = "50%";
+    ventana.style.transform = "translateX(-50%)";
+    ventana.style.zIndex = 9999;
 
-  heartbeat.currentTime = 0;
-  heartbeat.play();
-  flash.style.animation = 'heartSync 4.8s ease-in-out forwards';
-  setTimeout(() => flash.classList.add('hold'), 3200);
-
-  // ⚙️ 2. Señal segura a GitHub (sin exponer secretos)
-  try {
-    const response = await fetch(
-      "https://api.github.com/repos/A00590592/mictlan-filmico/dispatches",
-      {
-        method: "POST",
-        headers: {
-          "Accept": "application/vnd.github+json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ event_type: "revivir_web" })
-      }
-    );
-
-    console.log("📡 Señal enviada al puente:", response.status);
-  } catch (err) {
-    console.error("⚠️ Error al enviar la señal:", err);
+    ventana.innerHTML = `
+      <div class="window-header">🕯️ Ritual completado<div class="window-close" onclick="this.parentElement.parentElement.remove()">X</div></div>
+      <div class="window-content" style="text-align:center;">
+        <p>El alma de <b>${titulo}</b> ha sido reanimada.</p>
+        <button class="btn-back" onclick="window.open('${enlace}', '_blank')">🎞️ Ir a la película</button>
+        <button class="btn-back" onclick="alert('Guardado para ver después (versión beta).')">💾 Compartir para ver después</button>
+      </div>`;
+    
+    document.body.appendChild(ventana);
   }
 
-  // 🎞️ 3. Activar video después del pulso final
-  //setTimeout(() => {
-    //videoFrame.src = "https://www.youtube.com/embed/WAUiHImStdI?autoplay=1";
-    //videoFrame.style.display = 'block';
-    //setTimeout(() => flash.remove(), 1000);
-  //}, 4200);
-}
+  // ✨ Ritual final: usa el backend seguro (Cloudflare Worker)
+  async function revivirLuz(titulo = "Película", enlace = "#") {
+    // 🕯️ 1. Enviar señal segura al backend
+    try {
+      const res = await fetch("https://revivir-mictlan.admon-9b5.workers.dev/", { method: "POST" });
+      const txt = await res.text();
+      console.log("🕯️ Respuesta del altar:", txt);
+    } catch (e) {
+      console.error("⚠️ Error al contactar al altar:", e);
+    }
+
+    // 💓 2. Luz y sonido ritual
+    const flash = document.createElement('div');
+    flash.classList.add('flash');
+    document.body.appendChild(flash);
+
+    heartbeat.currentTime = 0;
+    heartbeat.play();
+    flash.style.animation = 'heartSync 4.8s ease-in-out forwards';
+    setTimeout(() => flash.classList.add('hold'), 3200);
+
+    // 🪶 3. Mostrar ventana final tras el pulso
+    setTimeout(() => {
+      try { flash.remove(); } catch (_) {}
+      mostrarVentanaAltar(titulo, enlace);
+    }, 4800);
+  }
 </script>
 </body>
 </html>
