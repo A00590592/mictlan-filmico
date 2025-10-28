@@ -59,6 +59,11 @@ jobs:
           cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
           mv tmp.json "$FILE"
 
+      - name: 🔄 Sincronizar rama altar-log (rebase seguro)
+        run: |
+          git fetch origin altar-log || true
+          git pull --rebase origin altar-log || true
+          
       - name: 💾 Commit & push log actualizado (solo en altar-log)
         env:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
