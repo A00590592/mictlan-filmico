@@ -1,4 +1,4 @@
-name: 🔔 Activar Revivir (rápido)
+name: 🔔 Revivir 🔔 
 
 on:
   workflow_dispatch:
