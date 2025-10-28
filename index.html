@@ -392,23 +392,76 @@ html, body {
 
   function showError() { openWindow('errorBox'); }
 
-  // ✨ Ritual: 3 latidos + luz blanca fija + video encima (sin pop-up)
-  function revivirLuz() {
+ // ✨ Ritual completo (3 latidos + luz blanca fija + video encima) + activación del puente en GitHub
+  async function revivirLuz() {
+    // 🔮 1. Crear efecto de luz
     const flash = document.createElement('div');
     flash.classList.add('flash');
     document.body.appendChild(flash);
 
+    // ❤️‍🔥 2. Latidos del corazón
     heartbeat.currentTime = 0;
     heartbeat.play();
-
     flash.style.animation = 'heartSync 4.8s ease-in-out forwards';
     setTimeout(() => flash.classList.add('hold'), 3200);
 
+    // 🪶 3. Disparar el flujo interno de GitHub (sin romper el ritmo)
+    try {
+      await touchTriggerFile();               // commit mínimo al gatillo
+      console.log('📡 Puente activado → activar-revivir.yml se ejecutará');
+    } catch (e) {
+      console.error('⚠️ No se pudo activar el puente:', e);
+    }
+
+    // 🎞️ 4. Al final, mostrar el video como siempre
     setTimeout(() => {
       videoFrame.src = "https://www.youtube.com/embed/WAUiHImStdI?autoplay=1";
       videoFrame.style.display = 'block';
       setTimeout(() => flash.remove(), 1000);
     }, 4200);
+  }
+
+  // 🧩 Dependencias del ritual (colócalas encima o junto con revivirLuz)
+  const OWNER = 'A00590592';
+  const REPO  = 'mictlan-filmico';
+  const TRIGGER_PATH = 'trigger/revivir.txt';
+
+  async function getFileSha() {
+    const r = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${TRIGGER_PATH}`, {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('MICTLAN_PAT')}` }
+    });
+    if (r.status === 200) {
+      const j = await r.json();
+      return j.sha;
+    }
+    return null;
+  }
+
+  async function touchTriggerFile() {
+    const token = localStorage.getItem('MICTLAN_PAT');
+    if (!token) { console.error('Falta MICTLAN_PAT en localStorage'); return; }
+
+    const sha = await getFileSha();
+    const body = {
+      message: `🔥 Revivir desde web ${new Date().toISOString()}`,
+      content: btoa(`run ${Date.now()}`),
+    };
+    if (sha) body.sha = sha;
+
+    const resp = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/contents/${TRIGGER_PATH}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (!resp.ok) {
+      const txt = await resp.text();
+      throw new Error(`PUT /contents error: ${resp.status} ${txt}`);
+    }
   }
 </script>
 </body>
