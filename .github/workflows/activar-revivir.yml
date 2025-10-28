@@ -47,8 +47,10 @@ jobs:
               return mqtt_packet(0x10, protocol_name + protocol_level + connect_flags + keep_alive, payload)
 
           def mqtt_publish(topic, message):
-              payload = struct.pack("!H", len(topic)) + topic.encode() + message.encode()
-              return mqtt_packet(0x30, b'', payload)
+              # ✅ Corrección: separar variable header y payload
+              variable_header = struct.pack("!H", len(topic)) + topic.encode()
+              payload = message.encode()
+              return mqtt_packet(0x30, variable_header, payload)
 
           def mqtt_disconnect():
               return mqtt_packet(0xE0)
@@ -66,6 +68,7 @@ jobs:
                   s.sendall(mqtt_connect(client_id, user, pwd))
                   time.sleep(0.3)
                   s.sendall(mqtt_publish(topic, payload))
+                  time.sleep(0.3)  # ✅ Espera para asegurar envío
                   s.sendall(mqtt_disconnect())
               print("✅ Señal MQTT 'revivir' enviada correctamente.")
           except Exception as e:
