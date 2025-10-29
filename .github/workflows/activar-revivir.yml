@@ -42,7 +42,7 @@ jobs:
           ref: altar-log
           fetch-depth: 0
 
-      - name: 📅 Registrar evento en el log (sin jq)
+      - name: 📅 Registrar evento en el log (formato legible)
         run: |
           echo "🪶 Registrando evento en data/revivir_log.json..."
           mkdir -p data
@@ -50,19 +50,20 @@ jobs:
           DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           MSG="Revivir ejecutado desde workflow - $DATE"
 
-          # Crear archivo si no existe
           if [ ! -f "$FILE" ]; then
-            echo "[{\"mensaje\": \"$MSG\"}]" > "$FILE"
+            echo "[" > "$FILE"
+            echo "  {\"mensaje\": \"$MSG\"}" >> "$FILE"
+            echo "]" >> "$FILE"
           else
-            # Insertar mensaje nuevo antes del cierre del arreglo
-            tmp=$(mktemp)
-            head -c -2 "$FILE" > "$tmp"
-            echo "  ,{\"mensaje\": \"$MSG\"}]" >> "$tmp"
-            mv "$tmp" "$FILE"
+            # Quitar el último corchete y agregar salto de línea si falta
+            sed -i '$ s/]$//' "$FILE"
+            echo "  ,{\"mensaje\": \"$MSG\"}" >> "$FILE"
+            echo "]" >> "$FILE"
           fi
 
           echo "✅ Evento agregado al log"
           cat "$FILE"
+
 
       - name: 💾 Commit & push log actualizado (solo altar-log)
         env:
