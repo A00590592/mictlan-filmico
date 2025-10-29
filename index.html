@@ -340,9 +340,9 @@ body::before {
   </div>
   <div class="window-content">
     <div class="poster-grid">
-      <div class="poster-icon" onclick="openWindow('macarioWin')">
-        <img src="assets/macario_16v.png" alt="Macario 16-bit">
-        <p>Macario</p>
+      <div class="poster-icon" onclick="openWindow('MYEWin')">
+        <img src="assets/MYE_16v.png" alt="Marino y Esmeralda 16-bit">
+        <p>Marino y Esmeralda</p>
       </div>
       <div class="poster-icon" onclick="openWindow('mariaWin')">
         <img src="assets/maria_16v.png" alt="María Candelaria 16-bit">
@@ -365,11 +365,14 @@ body::before {
 </div>
 
 <!-- 🪔 Subventanas con botón Volver -->
-<div id="macarioWin" class="window">
-  <div class="window-header">🎞️ Macario <div class="window-close" onclick="closeWindow('macarioWin')">X</div></div>
+<div id="MYEWin" class="window">
+  <div class="window-header">Marino y Esmeralda <div class="window-close" onclick="closeWindow('MYEWin')">X</div></div>
   <div class="window-content" style="text-align:center;">
-    <img src="assets/macario.png" width="240" alt="Macario"><br><br>
-    <p>Un campesino que cena con la Muerte y descubre el precio de la vida eterna.</p>
+    <img src="assets/MYE.png" width="240" alt="Marino y Esmeralda"><br><br>
+    <p>Marino, 18, un joven estudiante foráneo de cine, conoce a Esmeralda, 20, estudiante y artista plástica en quien encuentra la musa que
+siempre quiso para sus cámaras. Ingenuo, descubre poco a poco que
+Esmeralda es mucho más que sólo eso... y pronto se ve a sí mismo
+queriendo ser lo que ella es para él: su “muso”.</p>
     <button class="btn-revivir" onclick="revivirLuz()">✨ Revivir</button><br><br>
     <button onclick="closeWindow('macarioWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
   </div>
