@@ -1,4 +1,4 @@
-name: 🔔 Revivir 🔔
+name: 🔔 Revivir 🔔 
 
 on:
   workflow_dispatch:
@@ -12,11 +12,9 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
-      # 1️⃣ Verificar o instalar paho-mqtt
       - name: ⚙️ Verificar paho-mqtt
         run: python -m pip show paho-mqtt || python -m pip install --quiet paho-mqtt
 
-      # 2️⃣ Enviar señal MQTT al altar
       - name: 🕯️ Enviar señal al altar (TLS + auth)
         env:
           MQTT_USER: ${{ secrets.ALTAR_USER }}
@@ -38,19 +36,12 @@ jobs:
           )
           print("✅ Señal 'revivir' publicada")
 
-      # 3️⃣ Clonar toda la historia del repo
-      - name: 🪶 Clonar repositorio completo
+      - name: 🪶 Clonar repositorio (solo altar-log)
         uses: actions/checkout@v4
         with:
+          ref: altar-log
           fetch-depth: 0
 
-      # 4️⃣ Cambiar a rama altar-log (crearla si no existe)
-      - name: 🔀 Cambiar o crear rama altar-log
-        run: |
-          git fetch origin
-          git checkout -B altar-log || git checkout altar-log
-
-      # 5️⃣ Registrar evento en el log
       - name: 📅 Registrar evento en el log (sin jq)
         run: |
           echo "🪶 Registrando evento en data/revivir_log.json..."
@@ -61,32 +52,29 @@ jobs:
 
           # Crear archivo si no existe
           if [ ! -f "$FILE" ]; then
-            echo "[]" > "$FILE"
+            echo "[{\"mensaje\": \"$MSG\"}]" > "$FILE"
+          else
+            # Insertar mensaje nuevo antes del cierre del arreglo
+            tmp=$(mktemp)
+            head -c -2 "$FILE" > "$tmp"
+            echo "  ,{\"mensaje\": \"$MSG\"}]" >> "$tmp"
+            mv "$tmp" "$FILE"
           fi
 
-          # Insertar nuevo mensaje antes del cierre del arreglo
-          sed -i '$ s/]$/  ,{"mensaje": "'"$MSG"'"}\n]/' "$FILE" || echo "[{\"mensaje\": \"$MSG\"}]" > "$FILE"
-
           echo "✅ Evento agregado al log"
+          cat "$FILE"
 
-      # 6️⃣ Configurar Git y subir a altar-log (modo seguro)
-      - name: 💾 Commit & push log actualizado (sin conflictos)
+      - name: 💾 Commit & push log actualizado (solo altar-log)
         env:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
           git config --global user.name "Altar Mictlan"
           git config --global user.email "altar@mictlan.io"
-
-          # Alinear con la rama remota y evitar conflictos
-          git fetch origin altar-log
-          git reset --hard origin/altar-log || true
-
-          # Añadir y subir solo el log actualizado
           git add data/revivir_log.json
           if git diff --cached --quiet; then
             echo "🔸 No hay cambios nuevos que registrar."
           else
             git commit -m "🕯️ Nuevo revivir registrado (rama altar-log)"
-            git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log --force-with-lease
+            git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log
           fi
