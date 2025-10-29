@@ -51,18 +51,23 @@ jobs:
           git checkout -B altar-log || git checkout altar-log
 
       # 5️⃣ Registrar evento en el log
-      - name: 📅 Registrar evento en el log
+      - name: 📅 Registrar evento en el log (sin jq)
         run: |
           echo "🪶 Registrando evento en data/revivir_log.json..."
           mkdir -p data
           FILE=data/revivir_log.json
           DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           MSG="Revivir ejecutado desde workflow - $DATE"
+
+          # Crear archivo si no existe
           if [ ! -f "$FILE" ]; then
             echo "[]" > "$FILE"
           fi
-          cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
-          mv tmp.json "$FILE"
+
+          # Insertar nuevo mensaje antes del cierre del arreglo
+          sed -i '$ s/]$/  ,{"mensaje": "'"$MSG"'"}\n]/' "$FILE" || echo "[{\"mensaje\": \"$MSG\"}]" > "$FILE"
+
+          echo "✅ Evento agregado al log"
 
       # 6️⃣ Configurar Git y subir a altar-log (modo seguro)
       - name: 💾 Commit & push log actualizado (sin conflictos)
