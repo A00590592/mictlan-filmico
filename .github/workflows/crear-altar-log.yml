@@ -21,6 +21,8 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           echo "🪶 Creando rama altar-log desde cero..."
+          git config --global user.name "Altar Mictlan"
+          git config --global user.email "altar@mictlan.io"
           git checkout --orphan altar-log
           git rm -rf .
           mkdir -p data
