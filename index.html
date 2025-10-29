@@ -348,9 +348,9 @@ body::before {
         <img src="assets/rebeca_16v.png" alt="Rebeca 16-bit">
         <p>Rebeca</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('olvidadosWin')">
-        <img src="assets/olvidados_16v.png" alt="Los Olvidados 16-bit">
-        <p>Los olvidados</p>
+      <div class="poster-icon" onclick="openWindow('almasrotasWin')">
+        <img src="assets/almasrotas_16v.png" alt="Almas Rotas 16-bit">
+        <p>Almas Rotas</p>
       </div>
       <div class="poster-icon" onclick="openWindow('olvidadosWin')">
         <img src="assets/olvidados_16v.png" alt="Los Olvidados 16-bit">
@@ -392,7 +392,17 @@ que merecen sus sueños.</p>
   </div>
 </div>
 
-<div id="olvidadosWin" class="window">
+<div id="almasrotasWin" class="window">
+  <div class="window-header">Almas Rotas <div class="window-close" onclick="closeWindow('almasrotasWin')">X</div></div>
+  <div class="window-content" style="text-align:center;">
+    <img src="assets/almasrotas.png" width="240" alt="Almas Rotas"><br><br>
+    <p>Julián decide abandonarlo todo y emprender un viaje sin destino. Diez años después regresa en busca de su pasado y encuentra a María, la que una vez fuera su mujer, acompañada de Santiago, un escritor en quien ella ha encontrado un refugio. La llegada de Julián le da un nuevo e inesperado rumbo a la vida de los tres.</p>
+    <button class="btn-revivir" onclick="revivirLuz()">✨ Revivir</button><br><br>
+    <button onclick="closeWindow('almasrotassWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+  </div>
+</div>
+
+  <div id="olvidadosWin" class="window">
   <div class="window-header">🌀 Los olvidados <div class="window-close" onclick="closeWindow('olvidadosWin')">X</div></div>
   <div class="window-content" style="text-align:center;">
     <img src="assets/olvidados.png" width="240" alt="Los olvidados"><br><br>
