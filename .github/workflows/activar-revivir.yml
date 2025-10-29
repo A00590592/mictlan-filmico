@@ -12,9 +12,11 @@ jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
+      # 1️⃣ Verificar o instalar paho-mqtt
       - name: ⚙️ Verificar paho-mqtt
         run: python -m pip show paho-mqtt || python -m pip install --quiet paho-mqtt
 
+      # 2️⃣ Enviar señal MQTT al altar
       - name: 🕯️ Enviar señal al altar (TLS + auth)
         env:
           MQTT_USER: ${{ secrets.ALTAR_USER }}
@@ -36,21 +38,19 @@ jobs:
           )
           print("✅ Señal 'revivir' publicada")
 
-      # 🪶 Inicializar o restaurar la rama aislada de logs
-      - name: 🔀 Cambiar o crear rama altar-log aislada
-        run: |
-          git fetch origin || true
-          git checkout --orphan altar-log
-          git rm -rf .
-          mkdir -p data
-          if [ ! -f "data/revivir_log.json" ]; then
-            echo "[]" > data/revivir_log.json
-          fi
-          git add data/revivir_log.json
-          git commit -m "🌑 Rama altar-log inicializada (solo logs)"
-          git push -f https://x-access-token:${{ secrets.ALTAR_TOKEN }}@github.com/${{ github.repository }}.git altar-log || true
+      # 3️⃣ Clonar toda la historia del repo
+      - name: 🪶 Clonar repositorio completo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # 📅 Agregar el registro del nuevo evento
+      # 4️⃣ Cambiar a rama altar-log (crearla si no existe)
+      - name: 🔀 Cambiar o crear rama altar-log
+        run: |
+          git fetch origin
+          git checkout -B altar-log || git checkout altar-log
+
+      # 5️⃣ Registrar evento en el log
       - name: 📅 Registrar evento en el log
         run: |
           echo "🪶 Registrando evento en data/revivir_log.json..."
@@ -64,7 +64,7 @@ jobs:
           cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
           mv tmp.json "$FILE"
 
-      # 💾 Commit y push del log actualizado
+      # 6️⃣ Configurar Git y subir a altar-log
       - name: 💾 Commit & push log actualizado (solo en altar-log)
         env:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
@@ -76,6 +76,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "🔸 No hay cambios nuevos que registrar."
           else
-            git commit -m "🕯️ Nuevo revivir registrado"
-            git push -f https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log
+            git commit -m "🕯️ Nuevo revivir registrado (rama altar-log)"
+            git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log
           fi
