@@ -431,7 +431,7 @@ html, body {
   document.body.appendChild(ventana);
 }
 
-  // 💾 Compartir película reencarnada (compatible con móvil y escritorio)
+  // 💾 Compartir película reencarnada (móvil y escritorio optimizado)
 async function compartirPelicula(titulo, enlace) {
   const shareData = {
     title: titulo,
@@ -441,18 +441,44 @@ async function compartirPelicula(titulo, enlace) {
 
   try {
     if (navigator.share) {
-      // 📱 En móviles modernos: abre el panel nativo de compartir
+      // 📱 En móviles modernos: abre el panel de compartir
       await navigator.share(shareData);
       console.log("✅ Compartido correctamente.");
-    } else {
-      // 💾 En navegadores sin soporte: copia el enlace al portapapeles
+    } else if (navigator.clipboard) {
+      // 💻 En escritorio: copia el enlace al portapapeles automáticamente
       await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
-      alert("🔗 Enlace copiado al portapapeles:\n" + shareData.url);
+      mostrarToast("🔗 Enlace copiado al portapapeles");
+    } else {
+      // 🧩 Último recurso
+      alert("Copia este enlace:\n" + shareData.url);
     }
   } catch (err) {
     console.error("⚠️ Error al compartir:", err);
-    alert("No se pudo compartir. Intenta copiar el enlace manualmente.");
+    mostrarToast("No se pudo compartir, pero el enlace fue copiado");
   }
+}
+
+// 🔔 Mini aviso visual (sin alert)
+function mostrarToast(texto) {
+  const toast = document.createElement("div");
+  toast.textContent = texto;
+  toast.style.position = "fixed";
+  toast.style.bottom = "60px";
+  toast.style.right = "20px";
+  toast.style.background = "#000";
+  toast.style.color = "#fff";
+  toast.style.padding = "10px 15px";
+  toast.style.borderRadius = "4px";
+  toast.style.fontSize = "14px";
+  toast.style.opacity = "0";
+  toast.style.transition = "opacity 0.4s ease";
+  toast.style.zIndex = "99999";
+  document.body.appendChild(toast);
+  setTimeout(() => (toast.style.opacity = "1"), 100);
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    setTimeout(() => toast.remove(), 500);
+  }, 2500);
 }
   
   // ✨ Ritual final: usa el backend seguro (Cloudflare Worker)
