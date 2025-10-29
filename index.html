@@ -263,16 +263,18 @@ body::before {
   animation: respiracionLogo 14s ease-in-out infinite;
 }
 
-/* 📱 Ajuste móvil — centrado y tamaño equilibrado */
+/* 📱 Versión móvil — logo grande, inmersivo y orgánico */
 @media (max-width: 768px) {
   body::before {
-    top: 50%;
-    width: 65vw;    /* más pequeño, mantiene proporción visual */
-    height: 65vw;
-    opacity: 0.7;
+    top: 52%;                /* leve desplazamiento hacia abajo */
+    width: 110vw;            /* ocupa todo el fondo y un poco más */
+    height: 110vw;
+    opacity: 0.6;            /* más suave para que no opaque los íconos */
     animation: respiracionLogo 12s ease-in-out infinite;
+    filter: brightness(1.2) contrast(1);
   }
 }
+
 
 /* ✨ Animación con doble latido */
 @keyframes respiracionLogo {
