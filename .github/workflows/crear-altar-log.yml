@@ -1,0 +1,31 @@
+name: 🌑 Crear rama altar-log (una sola vez)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  crear_altar_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🪶 Clonar el repositorio
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🌑 Crear rama altar-log huérfana
+        env:
+          ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "🪶 Creando rama altar-log desde cero..."
+          git checkout --orphan altar-log
+          git rm -rf .
+          mkdir -p data
+          echo "[]" > data/revivir_log.json
+          git add data/revivir_log.json
+          git commit -m "🌑 Rama altar-log inicializada (solo logs)"
+          git push -f https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log
+          echo "✅ Rama altar-log creada exitosamente."
