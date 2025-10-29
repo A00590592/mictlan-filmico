@@ -42,28 +42,38 @@ jobs:
           ref: altar-log
           fetch-depth: 0
 
-      - name: 📅 Registrar evento en el log (formato limpio)
+      - name: 📅 Registrar evento en el log (MX timezone + formato impecable)
         run: |
           echo "🪶 Registrando evento en data/revivir_log.json..."
           mkdir -p data
           FILE=data/revivir_log.json
-          DATE=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          TZ='America/Mexico_City' DATE=$(date +"%Y-%m-%dT%H:%M:%S%z")
           MSG="Revivir ejecutado desde workflow - $DATE"
 
-          if [ ! -f "$FILE" ]; then
+          if [ ! -f "$FILE" ] || [ ! -s "$FILE" ]; then
             echo "[" > "$FILE"
             echo "  {\"mensaje\": \"$MSG\"}" >> "$FILE"
             echo "]" >> "$FILE"
           else
-            # Eliminar el último corchete, agregar nueva línea ordenada y cerrar
-            sed -i '$ s/ *]$//' "$FILE"
-            echo "  ," >> "$FILE"
-            echo "  {\"mensaje\": \"$MSG\"}" >> "$FILE"
-            echo "]" >> "$FILE"
+            # Comprobar si solo contiene []
+            if grep -q '\[\s*\]' "$FILE"; then
+              echo "[" > "$FILE"
+              echo "  {\"mensaje\": \"$MSG\"}" >> "$FILE"
+              echo "]" >> "$FILE"
+            else
+              tmp=$(mktemp)
+              # Eliminar el último corchete y agregar nueva línea ordenada
+              sed '$d' "$FILE" > "$tmp"
+              echo "  ," >> "$tmp"
+              echo "  {\"mensaje\": \"$MSG\"}" >> "$tmp"
+              echo "]" >> "$tmp"
+              mv "$tmp" "$FILE"
+            fi
           fi
 
-          echo "✅ Evento agregado al log"
+          echo -e "\n✅ Evento agregado al log (formato final):"
           cat "$FILE"
+
 
       - name: 💾 Commit & push log actualizado (solo altar-log)
         env:
