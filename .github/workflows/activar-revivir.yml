@@ -1,4 +1,4 @@
-name: 🔔 Revivir 🔔 
+name: 🔔 Revivir 🔔
 
 on:
   workflow_dispatch:
@@ -59,11 +59,11 @@ jobs:
           cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
           mv tmp.json "$FILE"
 
-      - name: 🔄 Sincronizar rama altar-log (rebase seguro)
+      - name: 🔄 Rebase altar-log antes de hacer commit
         run: |
           git fetch origin altar-log || true
-          git pull --rebase origin altar-log || true
-          
+          git rebase origin/altar-log || true
+
       - name: 💾 Commit & push log actualizado (solo en altar-log)
         env:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
@@ -76,5 +76,6 @@ jobs:
             echo "🔸 No hay cambios nuevos que registrar."
           else
             git commit -m "🕯️ Nuevo revivir registrado (rama altar-log)"
+            git pull --rebase origin altar-log || true
             git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log
           fi
