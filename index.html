@@ -242,6 +242,43 @@ html, body {
     height: 64px;
   }
 }
+
+/* 🜂 Logo como marca de agua con respiración */
+body::before {
+  content: "";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28vw;
+  height: 28vw;
+  max-width: 360px;
+  max-height: 360px;
+  background: url("assets/logo-mictlan.png") no-repeat center center;
+  background-size: contain;
+  opacity: 0.13;
+  filter: brightness(1.2) contrast(0.9);
+  pointer-events: none;
+  z-index: 0;
+  animation: respiracionLogo 12s ease-in-out infinite;
+}
+
+/* 📱 Móviles */
+@media (max-width: 768px) {
+  body::before {
+    width: 50vw;
+    height: 50vw;
+    opacity: 0.18;
+    animation: respiracionLogo 10s ease-in-out infinite;
+  }
+}
+
+/* ✨ Animación suave de respiración */
+@keyframes respiracionLogo {
+  0%, 100% { opacity: 0.13; filter: brightness(1.1) contrast(0.9); }
+  50% { opacity: 0.18; filter: brightness(1.25) contrast(1); }
+}
+  
 </style>
 </head>
 
