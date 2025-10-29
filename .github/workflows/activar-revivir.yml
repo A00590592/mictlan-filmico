@@ -42,7 +42,7 @@ jobs:
           ref: altar-log
           fetch-depth: 0
 
-      - name: 📅 Registrar evento en el log (formato legible)
+      - name: 📅 Registrar evento en el log (formato limpio)
         run: |
           echo "🪶 Registrando evento en data/revivir_log.json..."
           mkdir -p data
@@ -55,15 +55,15 @@ jobs:
             echo "  {\"mensaje\": \"$MSG\"}" >> "$FILE"
             echo "]" >> "$FILE"
           else
-            # Quitar el último corchete y agregar salto de línea si falta
-            sed -i '$ s/]$//' "$FILE"
-            echo "  ,{\"mensaje\": \"$MSG\"}" >> "$FILE"
+            # Eliminar el último corchete, agregar nueva línea ordenada y cerrar
+            sed -i '$ s/ *]$//' "$FILE"
+            echo "  ," >> "$FILE"
+            echo "  {\"mensaje\": \"$MSG\"}" >> "$FILE"
             echo "]" >> "$FILE"
           fi
 
           echo "✅ Evento agregado al log"
           cat "$FILE"
-
 
       - name: 💾 Commit & push log actualizado (solo altar-log)
         env:
