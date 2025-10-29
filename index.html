@@ -243,49 +243,63 @@ html, body {
   }
 }
 
-/* 🌕 Logo central con respiración visible y tamaño adaptable */
+/* 🜂 Logo central del altar — visible, centrado y con respiración doble */
 body::before {
   content: "";
   position: fixed;
-  top: 50%;
+  top: 48%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  width: 40vw;           /* proporcional al ancho del viewport */
-  height: 40vw;
-  max-width: 650px;      /* tamaño máximo en pantallas grandes */
-  max-height: 650px;
+  transform: translate(-50%, -50%);
+  width: 75vw;
+  height: 75vw;
+  max-width: 880px;
+  max-height: 880px;
   background: url("assets/logo-mictlan.png") no-repeat center center;
   background-size: contain;
-  opacity: 0.25;         /* más visible */
-  filter: brightness(1.3) contrast(1);
+  opacity: 0.7; /* 🌕 inicia visible al 70% */
+  filter: brightness(1.25) contrast(1);
   pointer-events: none;
   z-index: 0;
-  animation: respiracionLogo 8s ease-in-out infinite;
+  animation: respiracionLogo 14s ease-in-out infinite;
 }
 
-/* 📱 En móviles: más pequeño y balanceado */
+/* 📱 Ajuste móvil — mantiene el centrado y reduce tamaño ligeramente */
 @media (max-width: 768px) {
   body::before {
-    width: 65vw;
-    height: 65vw;
-    max-width: none;
-    max-height: none;
-    opacity: 0.3;
-    animation: respiracionLogo 7s ease-in-out infinite;
+    top: 50%;
+    width: 80vw;
+    height: 80vw;
+    opacity: 0.7;
+    animation: respiracionLogo 12s ease-in-out infinite;
   }
 }
 
-/* ✨ Respiración visible (pulso suave de luz y tamaño) */
+/* ✨ Animación con doble latido */
 @keyframes respiracionLogo {
-  0%, 100% {
-    opacity: 0.25;
+  0% {
+    opacity: 0.7;
     transform: translate(-50%, -50%) scale(1);
-    filter: brightness(1.2);
+    filter: brightness(1.1) contrast(0.9);
+  }
+  25% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.02);
+    filter: brightness(1.3) contrast(1);
   }
   50% {
-    opacity: 0.35;
-    transform: translate(-50%, -50%) scale(1.04);
-    filter: brightness(1.5);
+    opacity: 0.75;
+    transform: translate(-50%, -50%) scale(1);
+    filter: brightness(1.15) contrast(0.95);
+  }
+  75% {
+    opacity: 0.88;
+    transform: translate(-50%, -50%) scale(1.02);
+    filter: brightness(1.35) contrast(1.1);
+  }
+  100% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+    filter: brightness(1.1) contrast(0.9);
   }
 }
   
