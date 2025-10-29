@@ -72,6 +72,10 @@ jobs:
         run: |
           git config --global user.name "Altar Mictlan"
           git config --global user.email "altar@mictlan.io"
+
+          # Asegurarse de tener la última versión de altar-log
+          git pull --rebase origin altar-log || true
+
           git add data/revivir_log.json
           if git diff --cached --quiet; then
             echo "🔸 No hay cambios nuevos que registrar."
