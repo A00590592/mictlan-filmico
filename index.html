@@ -431,6 +431,30 @@ html, body {
   document.body.appendChild(ventana);
 }
 
+  // 💾 Compartir película reencarnada (compatible con móvil y escritorio)
+async function compartirPelicula(titulo, enlace) {
+  const shareData = {
+    title: titulo,
+    text: `El alma de ${titulo} ha sido reanimada. Compártela con quien merezca verla.`,
+    url: enlace === "#" ? window.location.href : enlace
+  };
+
+  try {
+    if (navigator.share) {
+      // 📱 En móviles modernos: abre el panel nativo de compartir
+      await navigator.share(shareData);
+      console.log("✅ Compartido correctamente.");
+    } else {
+      // 💾 En navegadores sin soporte: copia el enlace al portapapeles
+      await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+      alert("🔗 Enlace copiado al portapapeles:\n" + shareData.url);
+    }
+  } catch (err) {
+    console.error("⚠️ Error al compartir:", err);
+    alert("No se pudo compartir. Intenta copiar el enlace manualmente.");
+  }
+}
+  
   // ✨ Ritual final: usa el backend seguro (Cloudflare Worker)
   async function revivirLuz(titulo = "Película", enlace = "#") {
     // 🕯️ 1. Enviar señal segura al backend
@@ -455,7 +479,8 @@ html, body {
     // 🪶 3. Mostrar ventana final tras el pulso
     setTimeout(() => {
       try { flash.remove(); } catch (_) {}
-      mostrarVentanaAltar(titulo, enlace);
+      const enlaceCanal = "https://www.youtube.com/channel/UCRnx5YBmJZU-NChYcrPPmQg";
+      mostrarVentanaAltar(titulo, enlaceCanal);
     }, 4800);
   }
 </script>
