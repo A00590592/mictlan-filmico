@@ -64,8 +64,8 @@ jobs:
           cat "$FILE" | jq --arg m "$MSG" '. + [{"mensaje": $m}]' > tmp.json
           mv tmp.json "$FILE"
 
-      # 6️⃣ Configurar Git y subir a altar-log
-      - name: 💾 Commit & push log actualizado (solo en altar-log)
+      # 6️⃣ Configurar Git y subir a altar-log (modo seguro)
+      - name: 💾 Commit & push log actualizado (sin conflictos)
         env:
           ALTAR_TOKEN: ${{ secrets.ALTAR_TOKEN }}
           REPO: ${{ github.repository }}
@@ -73,13 +73,15 @@ jobs:
           git config --global user.name "Altar Mictlan"
           git config --global user.email "altar@mictlan.io"
 
-          # Asegurarse de tener la última versión de altar-log
-          git pull --rebase origin altar-log || true
+          # Alinear con la rama remota y evitar conflictos
+          git fetch origin altar-log
+          git reset --hard origin/altar-log || true
 
+          # Añadir y subir solo el log actualizado
           git add data/revivir_log.json
           if git diff --cached --quiet; then
             echo "🔸 No hay cambios nuevos que registrar."
           else
             git commit -m "🕯️ Nuevo revivir registrado (rama altar-log)"
-            git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log
+            git push https://x-access-token:${ALTAR_TOKEN}@github.com/${REPO}.git altar-log --force-with-lease
           fi
