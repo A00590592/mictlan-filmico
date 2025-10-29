@@ -431,34 +431,79 @@ html, body {
   document.body.appendChild(ventana);
 }
 
-  // 💾 Compartir película reencarnada (móvil y escritorio optimizado)
+  // 💾 Compartir película reencarnada (móvil y escritorio garantizado)
 async function compartirPelicula(titulo, enlace) {
-  const shareData = {
-    title: titulo,
-    text: `El alma de ${titulo} ha sido reanimada. Compártela con quien merezca verla.`,
-    url: enlace === "#" ? window.location.href : enlace
-  };
+  const texto = `El alma de ${titulo} ha sido reanimada. Compártela con quien merezca verla.`;
+  const url = enlace === "#" ? window.location.href : enlace;
+  const contenido = `${texto}\n${url}`;
 
   try {
     if (navigator.share) {
-      // 📱 En móviles modernos: abre el panel de compartir
-      await navigator.share(shareData);
-      console.log("✅ Compartido correctamente.");
-    } else if (navigator.clipboard) {
-      // 💻 En escritorio: copia el enlace al portapapeles automáticamente
-      await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
-      mostrarToast("🔗 Enlace copiado al portapapeles");
+      // 📱 Móviles modernos
+      await navigator.share({ title: titulo, text: texto, url: url });
+      mostrarToast("🕯️ Compartido correctamente");
     } else {
-      // 🧩 Último recurso
-      alert("Copia este enlace:\n" + shareData.url);
+      // 💻 Escritorio: intenta usar API moderna
+      const exito = await copiarAlPortapapeles(contenido);
+      if (exito) {
+        mostrarToast("🔗 Enlace copiado al portapapeles");
+      } else {
+        // Fallback garantizado
+        mostrarDialogoCopiar(contenido);
+      }
     }
   } catch (err) {
     console.error("⚠️ Error al compartir:", err);
-    mostrarToast("No se pudo compartir, pero el enlace fue copiado");
+    mostrarDialogoCopiar(contenido);
   }
 }
 
-// 🔔 Mini aviso visual (sin alert)
+// 🔧 Copia moderna o fallback oculto
+async function copiarAlPortapapeles(texto) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(texto);
+      return true;
+    } else {
+      const input = document.createElement("textarea");
+      input.value = texto;
+      input.style.position = "fixed";
+      input.style.opacity = "0";
+      document.body.appendChild(input);
+      input.focus();
+      input.select();
+      const exito = document.execCommand("copy");
+      document.body.removeChild(input);
+      return exito;
+    }
+  } catch {
+    return false;
+  }
+}
+
+// 🧾 Si falla todo, muestra un cuadro seguro de copia manual
+function mostrarDialogoCopiar(texto) {
+  const dialogo = document.createElement("div");
+  dialogo.style.position = "fixed";
+  dialogo.style.bottom = "60px";
+  dialogo.style.left = "50%";
+  dialogo.style.transform = "translateX(-50%)";
+  dialogo.style.background = "#222";
+  dialogo.style.color = "#fff";
+  dialogo.style.padding = "12px 16px";
+  dialogo.style.borderRadius = "4px";
+  dialogo.style.zIndex = "99999";
+  dialogo.style.fontSize = "14px";
+  dialogo.style.maxWidth = "90%";
+  dialogo.innerHTML = `
+    <p>📋 Copia este enlace manualmente:</p>
+    <textarea readonly style="width:100%;height:70px;">${texto}</textarea>
+  `;
+  document.body.appendChild(dialogo);
+  setTimeout(() => dialogo.remove(), 6000);
+}
+
+// 🔔 Mensaje visual tipo toast
 function mostrarToast(texto) {
   const toast = document.createElement("div");
   toast.textContent = texto;
@@ -479,7 +524,7 @@ function mostrarToast(texto) {
     toast.style.opacity = "0";
     setTimeout(() => toast.remove(), 500);
   }, 2500);
-}
+} //Aqui termina el coidgo de compartir. 
   
   // ✨ Ritual final: usa el backend seguro (Cloudflare Worker)
   async function revivirLuz(titulo = "Película", enlace = "#") {
