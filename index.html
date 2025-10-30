@@ -306,15 +306,12 @@ body::before {
   }
 }
 
-  /* 🪶 Corrección para botones en móviles (Revivir / Volver) */
-.window-content button {
-  display: block;           /* fuerza que cada botón ocupe su línea */
-  margin: 10px auto;        /* centra y separa verticalmente */
-}
-
+/* 🪶 Corrección visual solo para móviles (Revivir / Volver) */
 @media (max-width: 768px) {
   .window-content button {
-    width: 85%;             /* más cómodos en pantallas pequeñas */
+    display: block;           /* solo en móvil, cada botón ocupa su línea */
+    width: 85%;
+    margin: 10px auto;
     font-size: 16px;
   }
 }
