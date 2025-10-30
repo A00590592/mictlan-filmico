@@ -307,8 +307,8 @@ body::before {
 }
 
 /* 🎬 Alineación precisa de botones en ventanas de películas */
-
-/* 🕯️ Solo apilado vertical de Revivir / Volver, sin cambiar estilos base */
+  
+/* 🕯️ Mantiene el tamaño base, pero apila visualmente */
 #MYEWin .btn-revivir,
 #rebecaWin .btn-revivir,
 #almasrotasWin .btn-revivir,
@@ -319,13 +319,12 @@ body::before {
 #almasrotasWin .btn-back,
 #andreaWin .btn-back,
 #morganaWin .btn-back {
-  display: block;      /* fuerza apilado */
-  margin: 10px auto;   /* centrado con aire */
+  display: inline-block;      /* mantiene su tamaño natural */
+  margin: 6px 8px;            /* espacio sin estirar */
   text-align: center;
 }
 
-
-/* 📱 En móviles: Revivir arriba, Volver abajo */
+/* 📱 En móviles: apila y ensancha */
 @media (max-width: 768px) {
   #MYEWin .btn-revivir,
   #rebecaWin .btn-revivir,
@@ -337,7 +336,7 @@ body::before {
   #almasrotasWin .btn-back,
   #andreaWin .btn-back,
   #morganaWin .btn-back {
-    display: block;
+    display: block;       /* apila en móvil */
     width: 85%;
     margin: 10px auto;
     font-size: 16px;
