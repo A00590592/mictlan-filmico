@@ -305,6 +305,19 @@ body::before {
     filter: brightness(1.1) contrast(0.9);
   }
 }
+
+  /* 🪶 Corrección para botones en móviles (Revivir / Volver) */
+.window-content button {
+  display: block;           /* fuerza que cada botón ocupe su línea */
+  margin: 10px auto;        /* centra y separa verticalmente */
+}
+
+@media (max-width: 768px) {
+  .window-content button {
+    width: 85%;             /* más cómodos en pantallas pequeñas */
+    font-size: 16px;
+  }
+}
   
 </style>
 </head>
