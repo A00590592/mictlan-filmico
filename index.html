@@ -308,24 +308,22 @@ body::before {
 
 /* 🎬 Alineación precisa de botones en ventanas de películas */
 
-/* 💻 En web: Revivir y Volver en la misma línea, separados */
+/* 🕯️ Alineación vertical exclusiva de Revivir y Volver */
 #MYEWin .btn-revivir,
 #rebecaWin .btn-revivir,
 #almasrotasWin .btn-revivir,
 #andreaWin .btn-revivir,
-#morganaWin .btn-revivir {
-  display: inline-block;
-  margin-right: 12px; /* separación horizontal */
-}
-
+#morganaWin .btn-revivir,
 #MYEWin .btn-back,
 #rebecaWin .btn-back,
 #almasrotasWin .btn-back,
 #andreaWin .btn-back,
 #morganaWin .btn-back {
-  display: inline-block;
-  margin-left: 0;
-  vertical-align: middle;
+  display: block;           /* fuerza apilado vertical */
+  width: 85%;               /* ancho equilibrado */
+  margin: 10px auto;        /* centrado con aire */
+  font-size: 16px;
+  text-align: center;
 }
 
 /* 📱 En móviles: Revivir arriba, Volver abajo */
