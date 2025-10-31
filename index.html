@@ -330,6 +330,21 @@ body::before {
   margin: 6px auto 10px auto !important;
   text-align: center !important;
 }
+
+  /* 🪶 Versión estable: contenedor interno con scroll */
+  .scrollable-content {
+  max-height: 65vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+@media (max-width: 768px) {
+    .scrollable-content {
+    max-height: 60vh;
+    font-size: 14px;
+  }
+}
   
 </style>
 </head>
@@ -381,9 +396,9 @@ body::before {
         <img src="assets/andrea_16v.png" alt="Andrea en una Caja 16-bit">
         <p>Andrea en una Caja</p>
       </div>  
-      <div class="poster-icon" onclick="openWindow('morganaWin')">
-        <img src="assets/morgana_16v.png" alt="Morgana 16-bit">
-        <p>Morgana</p>
+      <div class="poster-icon" onclick="openWindow('morgongaWin')">
+        <img src="assets/morgana_16v.png" alt="Moronga 16-bit">
+        <p>Mogonga</p>
       </div>  
     </div>
   </div>
@@ -441,16 +456,16 @@ body::before {
   </div>
 </div>
 
-  <div id="morganaWin" class="window">
-  <div class="window-header">Morgana <div class="window-close" onclick="closeWindow('morganaWin')">X</div></div>
+  <div id="morongaWin" class="window">
+  <div class="window-header">Morgonga <div class="window-close" onclick="closeWindow('morganaWin')">X</div></div>
   <div class="window-content" style="text-align:center;">
-    <img src="assets/morgana.png" width="240" alt="Morgana"><br><br>
+    <img src="assets/morgana.png" width="240" alt="Moronga"><br><br>
     <p>Sur de México. Días de Muertos. Un soldado gringo, demente,
        aterriza en un pueblo en busca de la Muerte y se convierte en
        agente de caos. Solo Marilyn, su coyote coqueto, le puede
        enseñar el camino...</p>
-    <button class="btn-revivir" onclick="revivirLuz('Morgana')">✨ Revivir</button>
-    <button onclick="closeWindow('morganaWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+    <button class="btn-revivir" onclick="revivirLuz('Moronga')">✨ Revivir</button>
+    <button onclick="closeWindow('morongaWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
   </div>
 </div>
 
