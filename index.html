@@ -715,6 +715,21 @@ function mostrarToast(texto) {
     mostrarVentanaAltar(titulo, link);
   }, 4800);
 }
+  
+  /* 🪶 Ajuste: las ventanas largas ahora pueden desplazarse en móvil */
+  .window-content {
+  max-height: 70vh;       /* limita la altura visible */
+  overflow-y: auto;       /* permite hacer scroll vertical */
+  scrollbar-width: thin;  /* estiliza el scroll en Firefox */
+}
+
+@media (max-width: 768px) {
+    .window-content {
+    max-height: 65vh;     /* un poco más corta en pantallas pequeñas */
+    font-size: 14px;      /* texto ligeramente menor para mejor lectura */
+  }
+}
+
 </script>
 </body>
 </html>
