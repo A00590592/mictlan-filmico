@@ -716,24 +716,6 @@ function mostrarToast(texto) {
   }, 4800);
 }
   
-  /* 🪶 Ajuste mejorado: scroll interno sin romper interacción táctil */
-.window-content {
-  max-height: calc(70vh - 20px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* suaviza el scroll en iOS */
-  scrollbar-width: thin;
-}
-
-/* 📱 Ajuste específico para pantallas móviles */
-@media (max-width: 768px) {
-  .window-content {
-    max-height: calc(65vh - 20px);
-    font-size: 14px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
 </script>
 </body>
 </html>
