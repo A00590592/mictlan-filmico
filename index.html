@@ -326,7 +326,7 @@ body::before {
 #almasrotasWin p,
 #andreaWin p,
 #morongaWin p {
-  font-size: 17px;
+  font-size: 14px;
   text-align: justify;
   line-height: 1.55;
   margin: 10px 25px;
@@ -358,6 +358,20 @@ body::before {
     .scrollable-content {
     max-height: 60vh;
     font-size: 14px;
+  }
+}
+
+  /* 📱 Ajuste móvil: asegura que el contenido largo sea desplazable y los botones queden visibles */
+@media (max-width: 768px) {
+  .window-content {
+    max-height: 75vh;       /* limita la altura total de la ventana */
+    overflow-y: auto;       /* permite hacer scroll vertical */
+    -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
+  }
+
+  .window-content img {
+    max-width: 90%;         /* evita que las imágenes empujen el texto */
+    height: auto;
   }
 }
   
