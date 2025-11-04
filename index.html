@@ -375,21 +375,15 @@ body::before {
   }
 }
 
-/* 💻 Ajuste exclusivo para tablets: scroll visible solo en la ventana de Películas */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* 🖥️ Ajuste para tablets grandes (ej. Galaxy Tab, iPad Pro) */
+@media (min-width: 768px) and (max-width: 1800px) {
   #peliculas .window-content {
-    max-height: 75vh;              /* define el espacio visible dentro de la ventana */
+    max-height: 75vh;              /* altura visible del contenido */
     overflow-y: auto;              /* activa el scroll interno */
     -webkit-overflow-scrolling: touch; /* scroll suave */
-    scrollbar-width: thin;         /* barra delgada en Firefox */
   }
 
-  #peliculas .poster-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ajusta el grid */
-    gap: 18px;
-  }
-
-  /* Estilo retro Win98 para la barra en navegadores WebKit */
+  /* estilo retro para la barra */
   #peliculas .window-content::-webkit-scrollbar {
     width: 10px;
   }
@@ -401,6 +395,7 @@ body::before {
     background: #E0E0E0;
   }
 }
+
 
 
 </style>
