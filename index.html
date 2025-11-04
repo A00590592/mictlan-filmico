@@ -375,19 +375,36 @@ body::before {
   }
 }
 
-  /* 💻 Ajuste para tablets: activa scroll interno en la ventana de Películas Reencarnadas */
+/* 💻 Corrección final para tablets: scroll visible dentro de la ventana de películas */
 @media (min-width: 769px) and (max-width: 1024px) {
+  #peliculas {
+    max-height: 80vh;            /* limita la altura total de la ventana */
+    overflow-y: auto;            /* activa scroll completo */
+    -webkit-overflow-scrolling: touch; /* scroll suave en iOS/Android */
+  }
+
   #peliculas .window-content {
-    max-height: 70vh;       /* limita la altura de la ventana */
-    overflow-y: auto;       /* activa scroll vertical */
-    -webkit-overflow-scrolling: touch; /* scroll suave */
+    padding-bottom: 25px;        /* deja espacio para la última fila */
   }
 
   #peliculas .poster-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ajusta columnas */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 20px;
   }
+
+  /* opcional: barra retro estilo Win98 */
+  #peliculas::-webkit-scrollbar {
+    width: 10px;
+  }
+  #peliculas::-webkit-scrollbar-thumb {
+    background: #808080;
+    border: 2px solid #C0C0C0;
+  }
+  #peliculas::-webkit-scrollbar-track {
+    background: #E0E0E0;
+  }
 }
+
 </style>
 </head>
 
