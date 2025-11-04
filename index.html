@@ -375,35 +375,33 @@ body::before {
   }
 }
 
-/* 💻 Corrección final para tablets: scroll visible dentro de la ventana de películas */
+/* 💻 Ajuste exclusivo para tablets: scroll visible solo en la ventana de Películas */
 @media (min-width: 769px) and (max-width: 1024px) {
-  #peliculas {
-    max-height: 80vh;            /* limita la altura total de la ventana */
-    overflow-y: auto;            /* activa scroll completo */
-    -webkit-overflow-scrolling: touch; /* scroll suave en iOS/Android */
-  }
-
   #peliculas .window-content {
-    padding-bottom: 25px;        /* deja espacio para la última fila */
+    max-height: 75vh;              /* define el espacio visible dentro de la ventana */
+    overflow-y: auto;              /* activa el scroll interno */
+    -webkit-overflow-scrolling: touch; /* scroll suave */
+    scrollbar-width: thin;         /* barra delgada en Firefox */
   }
 
   #peliculas .poster-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ajusta el grid */
+    gap: 18px;
   }
 
-  /* opcional: barra retro estilo Win98 */
-  #peliculas::-webkit-scrollbar {
+  /* Estilo retro Win98 para la barra en navegadores WebKit */
+  #peliculas .window-content::-webkit-scrollbar {
     width: 10px;
   }
-  #peliculas::-webkit-scrollbar-thumb {
+  #peliculas .window-content::-webkit-scrollbar-thumb {
     background: #808080;
     border: 2px solid #C0C0C0;
   }
-  #peliculas::-webkit-scrollbar-track {
+  #peliculas .window-content::-webkit-scrollbar-track {
     background: #E0E0E0;
   }
 }
+
 
 </style>
 </head>
