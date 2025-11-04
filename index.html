@@ -602,17 +602,72 @@ body::before {
   </div> <!-- cierre window-content -->
 </div>
 
-<div id="creditos" class="window">
-  <div class="window-header">💾 Créditos <div class="window-close" onclick="closeWindow('creditos')">X</div></div>
-  <div class="window-content"><p>Versión 1.0.66 | Error del alma corregido y animado arriba.</p></div>
+  <!-- 💾 Créditos -->
+  <div id="creditos" class="window">
+  <div class="window-header">💾 Créditos 
+    <div class="window-close" onclick="closeWindow('creditos')">X</div>
+  </div>
+
+  <div class="window-content">
+    <div class="scrollable-content" style="text-align: left; line-height: 1.5; font-size: 15px;">
+
+      <p><b>Créditos</b></p>
+
+      <p>En este altar encontrarás cinco películas mexicanas:</p>
+      <ul style="list-style-type: none; padding-left: 0; line-height: 1.6;">
+        <li><b>Almas Rotas</b> — Dir. Juan Pablo Arroyo</li>
+        <li><b>Andrea en una Caja</b> — Dir. Adrián González Camargo</li>
+        <li><b>Marino y Esmeralda</b> — Dir. Luis R. Garza</li>
+        <li><b>Moronga</b> — Dir. John Dickie</li>
+        <li><b>Rebeca</b> — Dir. Luis R. Garza</li>
+      </ul>
+
+      <p><b>Investigación</b><br>
+      Astrid Yamil Carreto Martínez<br>
+      Azul Manzur Osorio<br>
+      Brenda Michelle Reyes Tolentino<br>
+      Dulce Estefanía Gálvez Herrera<br>
+      José Luis Morales López<br>
+      Ximena Fernanda García Pérez</p>
+
+      <p><b>Textos</b><br>
+      Brenda Michelle Reyes Tolentino</p>
+
+      <p><b>Gráficos</b><br>
+      Ximena Fernanda García Pérez<br>
+      Alberto de Zamacona</p>
+
+      <p><b>Permisos</b><br>
+      Dulce Estefanía Gálvez Herrera<br>
+      Astrid Yamil Carreto Martínez<br>
+      Arturo Pimentel</p>
+
+      <p><b>Edición</b><br>
+      José Luis Morales López</p>
+
+      <p><b>Creación y conceptualización</b><br>
+      Alberto de Zamacona</p>
+
+      <p><b>Coordinación general</b><br>
+      Narce Dalia Ruiz</p>
+
+      <hr style="margin: 15px 0; border: none; border-top: 1px solid #888;">
+
+      <p style="text-align: center; font-size: 13px; color: #333;">
+        <b>Desarrollo técnico del sistema IoT y front-end:</b><br>
+        Alberto de Zamacona </p>
+    </div>
+  </div>
 </div>
 
+ <!-- 📁 Mi karma -->
 <div id="karma" class="window">
   <div class="window-header">📁 Mi karma <div class="window-close" onclick="closeWindow('karma')">X</div></div>
   <div class="window-content"><p>Carpeta vacía (por ahora...)</p></div>
 </div>
 
-<div id="trash" class="window">
+  <!-- 🗑️ Papelera del alma -->
+  <div id="trash" class="window">
   <div class="window-header">🗑️ Papelera del alma <div class="window-close" onclick="closeWindow('trash')">X</div></div>
   <div class="window-content">
     <ul>
@@ -620,7 +675,7 @@ body::before {
       <li>culpas_viejas.bak</li>
       <li>amor_no_resuelto.tmp</li>
     </ul>
-    <button onclick="alert('Error: no es tan fácil borrar el alma… ni el karma.')">🗑️ Borrar</button>
+    <button onclick="alert('Error 404: el olvido no existe. Nada se borra, solo se reescribe en la memoria del altar.')">🗑️ Borrar</button>
   </div>
 </div>
 
