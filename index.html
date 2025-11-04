@@ -374,7 +374,20 @@ body::before {
     height: auto;
   }
 }
-  
+
+  /* 💻 Ajuste para tablets: activa scroll interno en la ventana de Películas Reencarnadas */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #peliculas .window-content {
+    max-height: 70vh;       /* limita la altura de la ventana */
+    overflow-y: auto;       /* activa scroll vertical */
+    -webkit-overflow-scrolling: touch; /* scroll suave */
+  }
+
+  #peliculas .poster-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ajusta columnas */
+    gap: 20px;
+  }
+}
 </style>
 </head>
 
