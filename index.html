@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
   
@@ -435,11 +435,8 @@ body::before {
     <button class="btn-back" onclick="goHome()">Inicio</button>
     <button class="btn-back" onclick="openWindow('privacidad')">🔒 Privacidad</button>
   </div>
-
   <div style="display:flex; align-items:center; gap:10px;">
-    <span style="font-size:11px; color:#555; white-space:nowrap;">
-      v1.1.0
-    </span>
+    <span style="font-size:11px; color:#555; white-space:nowrap;">v1.2.0</span>
     <span id="clock" class="clock-display"></span>
   </div>
 </div>
@@ -890,10 +887,51 @@ body::before {
   </div>
 </div>
 
- <!-- 📁 Mi karma -->
+ <!-- 📁 Mi karma: archivo por año -->
 <div id="karma" class="window">
-  <div class="window-header">📁 Mi karma <div class="window-close" onclick="closeWindow('karma')">X</div></div>
-  <div class="window-content"><p>Carpeta vacía (por ahora...)</p></div>
+  <div class="window-header">📁 Mi karma
+    <div class="window-close" onclick="closeWindow('karma')">X</div>
+  </div>
+  <div class="window-content" style="min-height:150px;">
+    <div class="poster-icon" onclick="openWindow('karma2025')" style="display:inline-flex; flex-direction:column; align-items:center; cursor:pointer; padding:12px;">
+      <span aria-hidden="true" style="font-size:52px; line-height:1;">📁</span>
+      <p style="margin:8px 0 0;">2025</p>
+    </div>
+  </div>
+</div>
+
+<!-- 📂 Mi karma > 2025: accesos al contenido actual -->
+<div id="karma2025" class="window">
+  <div class="window-header">📂 Mi karma / 2025
+    <div class="window-close" onclick="closeWindow('karma2025')">X</div>
+  </div>
+  <div class="window-content scrollable-content">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(105px, 1fr)); gap:18px; justify-items:center; padding:12px;">
+      <div class="poster-icon" onclick="openWindow('peliculas')" style="cursor:pointer; text-align:center;">
+        <img src="assets/icon-vhs.png" alt="Películas Reencarnadas" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
+        <p>Películas Reencarnadas 2025</p>
+      </div>
+      <div class="poster-icon" onclick="openWindow('altar')" style="cursor:pointer; text-align:center;">
+        <img src="assets/icon-altar.png" alt="El Altar" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
+        <p>El Altar 2025</p>
+      </div>
+      <div class="poster-icon" onclick="openWindow('manifiesto')" style="cursor:pointer; text-align:center;">
+        <img src="assets/icon-manifiesto.png" alt="Manifiesto" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
+        <p>Manifiesto 2025</p>
+      </div>
+      <div class="poster-icon" onclick="openWindow('creditos')" style="cursor:pointer; text-align:center;">
+        <img src="assets/icon-creditos.png" alt="Créditos" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
+        <p>Créditos 2025</p>
+      </div>
+      <div class="poster-icon" onclick="openWindow('mialma')" style="cursor:pointer; text-align:center;">
+        <img src="assets/icon-soul.png" alt="Mi Alma" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
+        <p>Mi Alma 2025</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin:12px 0;">
+      <button class="btn-back" onclick="openWindow('karma')">⬅ Volver a Mi karma</button>
+    </div>
+  </div>
 </div>
 
   <!-- 🗑️ Papelera del alma -->
