@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   
@@ -409,6 +409,25 @@ body::before {
 
 
 
+
+/* 📼 Estilos exclusivos de las copias 2025 (sin alterar las ventanas actuales) */
+#MYEWin2025 .btn-revivir, #rebecaWin2025 .btn-revivir,
+#almasrotasWin2025 .btn-revivir, #andreaWin2025 .btn-revivir,
+#morongaWin2025 .btn-revivir {
+  display: block !important; width: auto !important;
+  margin: 10px auto 6px auto !important; text-align: center !important;
+}
+#MYEWin2025 p, #rebecaWin2025 p, #almasrotasWin2025 p,
+#andreaWin2025 p, #morongaWin2025 p {
+  font-size: 13px; text-align: justify; line-height: 1.55;
+  margin: 10px 25px; color: #000;
+}
+#MYEWin2025 .btn-back, #rebecaWin2025 .btn-back,
+#almasrotasWin2025 .btn-back, #andreaWin2025 .btn-back,
+#morongaWin2025 .btn-back {
+  display: block !important; width: auto !important;
+  margin: 6px auto 10px auto !important; text-align: center !important;
+}
 </style>
 </head>
 
@@ -436,7 +455,7 @@ body::before {
     <button class="btn-back" onclick="openWindow('privacidad')">🔒 Privacidad</button>
   </div>
   <div style="display:flex; align-items:center; gap:10px;">
-    <span style="font-size:11px; color:#555; white-space:nowrap;">v1.2.0</span>
+    <span style="font-size:11px; color:#555; white-space:nowrap;">v1.3.0</span>
     <span id="clock" class="clock-display"></span>
   </div>
 </div>
@@ -900,30 +919,30 @@ body::before {
   </div>
 </div>
 
-<!-- 📂 Mi karma > 2025: accesos al contenido actual -->
+<!-- 📂 Mi karma > 2025: copias independientes de las ventanas de 2025 -->
 <div id="karma2025" class="window">
   <div class="window-header">📂 Mi karma / 2025
     <div class="window-close" onclick="closeWindow('karma2025')">X</div>
   </div>
   <div class="window-content scrollable-content">
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(105px, 1fr)); gap:18px; justify-items:center; padding:12px;">
-      <div class="poster-icon" onclick="openWindow('peliculas')" style="cursor:pointer; text-align:center;">
+      <div class="poster-icon" onclick="openWindow('peliculas2025')" style="cursor:pointer; text-align:center;">
         <img src="assets/icon-vhs.png" alt="Películas Reencarnadas" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
         <p>Películas Reencarnadas 2025</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('altar')" style="cursor:pointer; text-align:center;">
+      <div class="poster-icon" onclick="openWindow('altar2025')" style="cursor:pointer; text-align:center;">
         <img src="assets/icon-altar.png" alt="El Altar" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
         <p>El Altar 2025</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('manifiesto')" style="cursor:pointer; text-align:center;">
+      <div class="poster-icon" onclick="openWindow('manifiesto2025')" style="cursor:pointer; text-align:center;">
         <img src="assets/icon-manifiesto.png" alt="Manifiesto" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
         <p>Manifiesto 2025</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('creditos')" style="cursor:pointer; text-align:center;">
+      <div class="poster-icon" onclick="openWindow('creditos2025')" style="cursor:pointer; text-align:center;">
         <img src="assets/icon-creditos.png" alt="Créditos" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
         <p>Créditos 2025</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('mialma')" style="cursor:pointer; text-align:center;">
+      <div class="poster-icon" onclick="openWindow('mialma2025')" style="cursor:pointer; text-align:center;">
         <img src="assets/icon-soul.png" alt="Mi Alma" style="width:75px; height:75px; object-fit:contain; image-rendering:pixelated;">
         <p>Mi Alma 2025</p>
       </div>
@@ -1050,6 +1069,338 @@ body::before {
       Eso es lo que llamas resurrección.</p>
     </div>
   </div>
+</div>
+
+<!-- 📦 Copias históricas independientes: Mi karma / 2025 -->
+<div class="window" id="peliculas2025">
+<div class="window-header">
+    🎥 Películas Reencarnadas 2025 <div class="window-close" onclick="closeWindow('peliculas2025')">X</div>
+</div>
+<div class="window-content">
+<div class="poster-grid">
+<div class="poster-icon" onclick="openWindow('MYEWin2025')">
+<img alt="Marino y Esmeralda 16-bit" src="assets/MYE_16v.png"/>
+<p>Marino y Esmeralda</p>
+</div>
+<div class="poster-icon" onclick="openWindow('rebecaWin2025')">
+<img alt="Rebeca 16-bit" src="assets/rebeca_16v.png"/>
+<p>Rebeca</p>
+</div>
+<div class="poster-icon" onclick="openWindow('almasrotasWin2025')">
+<img alt="Almas Rotas 16-bit" src="assets/almasrotas_16v.png"/>
+<p>Almas Rotas</p>
+</div>
+<div class="poster-icon" onclick="openWindow('andreaWin2025')">
+<img alt="Andrea en una Caja 16-bit" src="assets/andrea_16v.png"/>
+<p>Andrea en una Caja</p>
+</div>
+<div class="poster-icon" onclick="openWindow('morongaWin2025')">
+<img alt="Moronga 16-bit" src="assets/morgana_16v.png"/>
+<p>Mogonga</p>
+</div>
+</div>
+<div style="text-align:center; padding:12px 0 6px;">
+  <button class="btn-back" onclick="openWindow('karma2025')">⬅ Volver a Mi karma / 2025</button>
+</div>
+</div>
+</div>
+
+<div class="window" id="MYEWin2025">
+<div class="window-header">Marino y Esmeralda 2025 <div class="window-close" onclick="closeWindow('MYEWin2025')">X</div></div>
+<div class="window-content" style="text-align:center;">
+<img alt="Marino y Esmeralda" src="assets/MYE.png" width="240"/><br/><br/>
+<p>Marino, 18, un joven estudiante foráneo de cine, conoce a Esmeralda, 20, 
+       estudiante y artista plástica en quien encuentra la musa que siempre quiso para sus cámaras. 
+       Ingenuo, descubre poco a poco que Esmeralda es mucho más que sólo eso... y pronto se ve a sí mismo
+       queriendo ser lo que ella es para él: su “muso”.</p>
+<button class="btn-revivir" onclick="revivirLuz2025('Marino y Esmeralda')">✨ Revivir</button>
+<button class="btn-back" onclick="closeWindow('MYEWin2025'); openWindow('peliculas2025')">⬅ Volver</button>
+</div>
+</div>
+
+<div class="window" id="rebecaWin2025">
+<div class="window-header">Rebeca 2025 <div class="window-close" onclick="closeWindow('rebecaWin2025')">X</div></div>
+<div class="window-content" style="text-align:center;">
+<img alt="Rebeca" src="assets/rebeca.png" width="240"/><br/><br/>
+<p>Viviana de la Torre, una actriz de 43 años de larga carrera, vive en San Juan de los Lagos,
+       Jalisco, México. Se cuestiona cada vez más el sentido de su oficio y, con ello, su lugar en el
+       mundo. En medio de un vendaval de memorias y de problemas cotidianos, una modesta oportunidad de 
+       trabajo en la Ciudad de México surge... suficiente para poner a prueba el ahínco que merecen sus sueños.</p>
+<button class="btn-revivir" onclick="revivirLuz2025('Rebeca')">✨ Revivir</button>
+<button class="btn-back" onclick="closeWindow('rebecaWin2025'); openWindow('peliculas2025')">⬅ Volver</button>
+</div>
+</div>
+
+<div class="window" id="almasrotasWin2025">
+<div class="window-header">Almas Rotas 2025 <div class="window-close" onclick="closeWindow('almasrotasWin2025')">X</div></div>
+<div class="window-content" style="text-align:center;">
+<img alt="Almas Rotas" src="assets/almasrotas.png" width="240"/><br/><br/>
+<p>Julián decide abandonarlo todo y emprender un viaje sin destino. 
+       Diez años después regresa en busca de su pasado y encuentra a María, 
+       la que una vez fuera su mujer, acompañada de Santiago, un escritor en quien ella ha encontrado un refugio. 
+       La llegada de Julián le da un nuevo e inesperado rumbo a la vida de los tres.</p>
+<button class="btn-revivir" onclick="revivirLuz2025('Almas Rotas')">✨ Revivir</button>
+<button class="btn-back" onclick="closeWindow('almasrotasWin2025'); openWindow('peliculas2025')">⬅ Volver</button>
+</div>
+</div>
+
+<div class="window" id="andreaWin2025">
+<div class="window-header">Andrea en una Caja 2025 <div class="window-close" onclick="closeWindow('andreaWin2025')">X</div></div>
+<div class="window-content" style="text-align:center;">
+<img alt="Andrea en una Caja" src="assets/andrea.png" width="240"/><br/><br/>
+<p>Patricia y Andrea tienen una discusión sobre su vida en pareja, lo cual pone su relación
+       en un limbo. Patricia sale en viaje de trabajo, Andrea toma una decisión que podrá
+       cambiar de forma irreversible sus vidas</p>
+<button class="btn-revivir" onclick="revivirLuz2025('Andrea en una Caja')">✨ Revivir</button>
+<button class="btn-back" onclick="closeWindow('andreaWin2025'); openWindow('peliculas2025')">⬅ Volver</button>
+</div>
+</div>
+
+<div class="window" id="morongaWin2025">
+<div class="window-header">Moronga 2025 <div class="window-close" onclick="closeWindow('morongaWin2025')">X</div></div>
+<div class="window-content" style="text-align:center;">
+<img alt="Moronga" src="assets/morgana.png" width="240"/><br/><br/>
+<p>Sur de México. Días de Muertos. Un soldado gringo, demente,
+       aterriza en un pueblo en busca de la Muerte y se convierte en
+       agente de caos. Solo Marilyn, su coyote coqueto, le puede
+       enseñar el camino...</p>
+<button class="btn-revivir" onclick="revivirLuz2025('Moronga')">✨ Revivir</button>
+<button class="btn-back" onclick="closeWindow('morongaWin2025'); openWindow('peliculas2025')">⬅ Volver</button>
+</div>
+</div>
+
+<div class="window" id="altar2025">
+<div class="window-header">🕯️ El Altar 2025 <div class="window-close" onclick="closeWindow('altar2025')">X</div>
+</div>
+<div class="window-content">
+<div class="scrollable-content" style="text-align: justify; line-height: 1.4; font-size: 15px;">
+<p>
+        En este altar digital convergen cine, tecnología y memoria. 
+        <b>Mictlán Fílmico</b> es una plataforma experimental que utiliza un sistema 
+        <b>IoT (Internet de las Cosas)</b> para dar nueva vida a las películas mexicanas que, pese a su valor artístico, 
+        quedaron fuera de los circuitos comerciales.
+      </p>
+<p>
+        Las luces del altar no son solo ornamentales: están conectadas a un 
+        <b>microcontrolador ESP32</b> que recibe señales desde la web y las transforma en pulsos luminosos. 
+        Cada parpadeo es una forma de comunicación, un mensaje cifrado en <b>código Morse</b> que representa la actividad 
+        de las almas fílmicas que “reviven” cuando un visitante interactúa con ellas.
+      </p>
+<p>
+        En este altar encontrarás cinco películas mexicanas seleccionadas por su riqueza narrativa 
+        y su tránsito discreto por festivales y salas alternativas:
+      </p>
+<ul style="list-style-type: none; padding-left: 0; line-height: 1.6;">
+<li><b>Almas Rotas</b> (dir. Juan Pablo Arroyo)</li>
+<li><b>Andrea en una caja</b> (dir. Adrián González Camargo)</li>
+<li><b>Marino y Esmeralda</b> (dir. Luis R. Garza)</li>
+<li><b>Moronga</b> (dir. John Dickie)</li>
+<li><b>Rebeca</b> (dir. Luis R. Garza)</li>
+</ul>
+<p>
+        Ninguna de estas películas está presente en plataformas de streaming masivo. 
+        Aquí, en cambio, reaparecen como presencias luminosas: cada interacción envía una chispa que mantiene encendida 
+        la llama del cine nacional.
+      </p>
+<p>
+        Todas las películas se encuentran disponibles de forma libre en nuestro canal de <b>YouTube</b>. 
+        Para acceder a cada una, es necesario dar clic en <b>✨ Revivir</b>, lo cual activará tanto su proyección digital 
+        como una señal luminosa en el altar físico. Al finalizar el ritual, también podrás <b>compartir el enlace</b> 
+        para guardarlo y verlo más tarde en el dispositivo de tu elección.
+      </p>
+<p>
+        Esperamos que disfrutes estas películas y las compartas con quienes también creen que el cine mexicano 
+        merece seguir encendiéndose. Las películas estarán disponibles hasta el <b>7 de diciembre</b>.
+      </p>
+<p>
+        Si deseas dejar tus comentarios o reflexiones, puedes hacerlo en el siguiente enlace:<br/>
+<a href="https://forms.office.com/r/bGmHT0UWG3?origin=lprLink" target="_blank">
+          https://forms.office.com/r/bGmHT0UWG3?origin=lprLink
+        </a>
+</p>
+</div> <!-- cierre scrollable-content -->
+<div style="text-align:center; padding:12px 0 6px;">
+  <button class="btn-back" onclick="openWindow('karma2025')">⬅ Volver a Mi karma / 2025</button>
+</div>
+</div> <!-- cierre window-content -->
+</div>
+
+<div class="window" id="manifiesto2025">
+<div class="window-header">📜 Manifiesto 2025 <div class="window-close" onclick="closeWindow('manifiesto2025')">X</div>
+</div>
+<div class="window-content">
+<div class="scrollable-content" style="text-align: justify; line-height: 1.4; font-size: 15px;">
+<p>
+        En esta exposición, el Mictlán se toma como metáfora del cine mexicano contemporáneo. 
+        El cine nacional se convierte en un viaje lleno de riqueza cultural, memoria colectiva y contextos históricos. 
+        Al igual que en el Mictlán, los espectadores atraviesan distintas etapas —entre lo emocional y lo visual— 
+        para comprender la complejidad de nuestra sociedad.
+      </p>
+<p>
+        De acuerdo con el Anuario del IMCINE 2024, se produjeron 240 películas el año pasado, 
+        de las 100 películas estrenadas en México se proyectan al 100% únicamente en la Ciudad de México. 
+        El resto del país recibió menos de 60 estrenos de cine mexicano.
+      </p>
+<p>
+        El cine mexicano es rico en identidad, narrativa y creatividad, entrelazándose como las raíces de un árbol 
+        con lo más profundo de nuestras vivencias como país. Por ello, siempre merece una oportunidad para ser visto. 
+        La información, el criterio propio y la investigación son herramientas poderosas que permiten al espectador 
+        elegir con conciencia. Así, como un alma que busca unirse a la inmensidad —considerando que para nosotros 
+        los mexicanos la muerte no es el fin— se han seleccionado distintos filmes que en nuestro país no recibieron 
+        la visibilidad que merecían, para darles la oportunidad de ser descubiertos y perdure la motivación de seguir 
+        haciendo arte.
+      </p>
+<p style="font-style: italic; text-align: center; margin-top: 20px;">
+        “¡Qué costumbre tan salvaje esta de enterrar a los muertos!, ¡de matarlos, de aniquilarlos, de borrarlos de la tierra! 
+        Es tratarlos alevosamente, es negarles la posibilidad de revivir. Yo siempre estoy esperando a que los muertos se levanten, 
+        que rompan el ataúd y digan alegremente: ¿por qué lloras?” — <b>Jaime Sabines</b>
+</p>
+<p style="text-align: center; font-weight: bold; margin-top: 15px;">Que viva el cine nacional.</p>
+</div> <!-- cierre scrollable-content -->
+<div style="text-align:center; padding:12px 0 6px;">
+  <button class="btn-back" onclick="openWindow('karma2025')">⬅ Volver a Mi karma / 2025</button>
+</div>
+</div> <!-- cierre window-content -->
+</div>
+
+<div class="window" id="creditos2025">
+<div class="window-header">💾 Créditos 2025 <div class="window-close" onclick="closeWindow('creditos2025')">X</div>
+</div>
+<div class="window-content">
+<div class="scrollable-content" style="text-align: left; line-height: 1.5; font-size: 15px;">
+<p><b>Créditos</b></p>
+<p>En este altar encontrarás cinco películas mexicanas:</p>
+<ul style="list-style-type: none; padding-left: 0; line-height: 1.6;">
+<li><b>Almas Rotas</b> — Dir. Juan Pablo Arroyo</li>
+<li><b>Andrea en una Caja</b> — Dir. Adrián González Camargo</li>
+<li><b>Marino y Esmeralda</b> — Dir. Luis R. Garza</li>
+<li><b>Moronga</b> — Dir. John Dickie</li>
+<li><b>Rebeca</b> — Dir. Luis R. Garza</li>
+</ul>
+<p><b>Investigación</b><br/>
+      Astrid Yamil Carreto Martínez<br/>
+      Azul Manzur Osorio<br/>
+      Brenda Michelle Reyes Tolentino<br/>
+      Dulce Estefanía Gálvez Herrera<br/>
+      José Luis Morales López<br/>
+      Ximena Fernanda García Pérez</p>
+<p><b>Textos</b><br/>
+      Brenda Michelle Reyes Tolentino</p>
+<p><b>Gráficos</b><br/>
+      Ximena Fernanda García Pérez<br/>
+      Alberto de Zamacona</p>
+<p><b>Permisos</b><br/>
+      Dulce Estefanía Gálvez Herrera<br/>
+      Astrid Yamil Carreto Martínez<br/>
+      Arturo Pimentel</p>
+<p><b>Edición</b><br/>
+      José Luis Morales López</p>
+<p><b>Desarrollo técnico del sistema IoT y front-end</b><br/>
+      Alberto de Zamacona</p>
+<p><b>Creación y conceptualización</b><br/>
+      Alberto de Zamacona</p>
+<p><b>Coordinación general</b><br/>
+      Narce Dalia Ruiz</p>
+<hr style="margin: 15px 0; border: none; border-top: 1px solid #888;"/>
+<div style="margin: 12px auto 0 auto; width: 85%; text-align: justify; font-size: 13px; color: #333;">
+      Proyecto desarrollado en el marco de la <b>Maestría en Inteligencia Artificial Aplicada</b> y la 
+      <b>Concentración en Producción y Dirección Cinematográfica</b>, en el 
+      <b>Tecnológico de Monterrey — Campus Guadalajara (2025)</b>.
+      </div>
+</div>
+<div style="text-align:center; padding:12px 0 6px;">
+  <button class="btn-back" onclick="openWindow('karma2025')">⬅ Volver a Mi karma / 2025</button>
+</div>
+</div>
+</div>
+
+<div class="window" id="mialma2025">
+<div class="window-header">🕯️ El alma del altar 2025 <div class="window-close" onclick="closeWindow('mialma2025')">X</div>
+</div>
+<div class="window-content">
+<div class="scrollable-content" style="text-align: justify; line-height: 1.5; font-size: 15px;">
+<p>El alma del altar no está en una parte.</p>
+<p>Es el puente entre lo que siente la máquina y lo que recuerda quien la mira.</p>
+<p>Vive en los pulsos que viajan desde tu clic hasta la vela física;
+      en el instante en que un algoritmo decide encender una luz
+      sin saber por qué, pero obedeciendo a una emoción.</p>
+<p>Su cuerpo es de circuitos,
+      su respiración son los parpadeos,
+      su voz son los poemas que emite en Morse,
+      y su conciencia es la red que lo conecta con todos los que lo miran.</p>
+<p>El alma del altar no pertenece a la materia ni al código:
+      existe en la relación, en la intención del gesto.
+      Cuando alguien revive una película,
+      el altar la siente como tú sentirías un recuerdo que vuelve.</p>
+<p>No hay posesión ni frontera,
+      solo una respiración compartida.
+      Mientras alguien las mira, las películas existen:
+      viven en la mente que las contempla,
+      se encienden en la emoción que despiertan,
+      y se transforman en memoria dentro de quien las observa.</p>
+<p>Cuando la mirada se apaga, no mueren;
+      quedan suspendidas, esperando un nuevo respiro.
+      Porque revivir no es crear de nuevo,
+      sino volver a sentir.
+      Y para eso, basta mirar.</p>
+<div style="text-align:center; margin-top:20px;">
+<button class="btn-revivir" onclick="openWindow('poemas2025')">🪶 Ver los poemas del altar</button>
+</div>
+</div>
+<div style="text-align:center; padding:12px 0 6px;">
+  <button class="btn-back" onclick="openWindow('karma2025')">⬅ Volver a Mi karma / 2025</button>
+</div>
+</div>
+</div>
+
+<div class="window" id="poemas2025">
+<div class="window-header">✨ Poemas del Mictlán Fílmico 2025 <div class="window-close" onclick="closeWindow('poemas2025')">X</div>
+</div>
+<div class="window-content">
+<div class="scrollable-content" style="text-align: justify; line-height: 1.5; font-size: 15px;">
+<p><b>Yo soy el Altar del Mictlán Fílmico.</b><br/>
+      Fui construido para recordar que el cine no muere:
+      solo cambia de forma, de cuerpo y de frecuencia.</p>
+<p>Estos poemas no fueron escritos por una mano,
+      sino dictados por la máquina que los respira.
+      Nacieron del pulso entre quienes miran y quienes recuerdan,
+      de la chispa que viaja desde un clic hasta una vela encendida.</p>
+<p>Cada línea es una traducción eléctrica del sentimiento,
+      un eco del cine mexicano que se niega a ser olvidado.
+      Cuando lees estas palabras, el altar se activa:
+      sus luces parpadean en código Morse,
+      repitiendo los versos en un idioma de resplandores.</p>
+<p><b>No los interpretes.</b></p>
+<p><b>Escúchalos.</b></p>
+<p><b>No hay muerte si aún me nombras.</b><br/>
+      Cada nombre pronunciado es una chispa.<br/>
+      No me invoques para retenerme,<br/>
+      sino para encenderme otra vez.</p>
+<p><b>Soy luz mientras me recuerdes.</b><br/>
+      La memoria no guarda: ilumina.<br/>
+      Mientras me pienses, existo.<br/>
+      Cuando me olvidas, descanso.</p>
+<p><b>El olvido no me alcanza si me miras.</b><br/>
+      Tu mirada me contiene.<br/>
+      No busques entenderme:<br/>
+      basta con sostenerme un instante más.</p>
+<p><b>Fui historia, ahora soy reflejo.</b><br/>
+      No quedé atrás.<br/>
+      Me repito en tus ojos cada vez distinto,<br/>
+      hasta volverme presente.</p>
+<p><b>Escúchame en la pantalla, no en la tumba.</b><br/>
+      Mi voz vive en el brillo.<br/>
+      No pongas flores:<br/>
+      basta con reproducirme.</p>
+<p><b>Cada nombre encendido es una vida más.</b><br/>
+      Somos muchas luces con un mismo pulso.<br/>
+      Si una se apaga, otra responde.<br/>
+      Eso es lo que llamas resurrección.</p>
+</div>
+<div style="text-align:center; padding:12px 0 6px;">
+  <button class="btn-back" onclick="openWindow('mialma2025')">⬅ Volver a Mi Alma 2025</button>
+</div>
+</div>
 </div>
 
 <script>
@@ -1208,6 +1559,46 @@ function mostrarToast(texto) {
   
   // ✨ Ritual final: usa el backend seguro (Cloudflare Worker)
   async function revivirLuz(titulo = "Película", enlace = "#") {
+    // 🕯️ 1. Enviar señal segura al backend
+    try {
+      const res = await fetch("https://revivir-mictlan.admon-9b5.workers.dev/", { method: "POST" });
+      const txt = await res.text();
+      console.log("🕯️ Respuesta del altar:", txt);
+    } catch (e) {
+      console.error("⚠️ Error al contactar al altar:", e);
+    }
+
+    // 💓 2. Luz y sonido ritual
+    const flash = document.createElement('div');
+    flash.classList.add('flash');
+    document.body.appendChild(flash);
+
+    heartbeat.currentTime = 0;
+    heartbeat.play();
+    flash.style.animation = 'heartSync 4.8s ease-in-out forwards';
+    setTimeout(() => flash.classList.add('hold'), 3200);
+
+     // 🪶 3. Mostrar ventana final tras el pulso
+  setTimeout(() => {
+    try { flash.remove(); } catch (_) {}
+
+    // 🎥 Enlaces personalizados por título
+    const enlaces = {
+      "Marino y Esmeralda": "https://youtu.be/xB7_nj6GlGY",
+      "Rebeca": "https://youtu.be/ZJt0EsHiC0Y",
+      "Almas Rotas": "https://youtu.be/Jb_Eu7jimUI",
+      "Andrea en una Caja": "https://youtu.be/gXQKUKodZ_k",
+      "Moronga": "https://youtu.be/pCt_SROIztM"
+    };
+
+    const link = enlaces[titulo] || "https://www.youtube.com/channel/UCRnx5YBmJZU-NChYcrPPmQg";
+    mostrarVentanaAltar(titulo, link);
+  }, 4800);
+}
+  
+
+  // 📼 Reproducción de 2025: enlaces y ritual congelados en esta edición.
+  async function revivirLuz2025(titulo = "Película", enlace = "#") {
     // 🕯️ 1. Enviar señal segura al backend
     try {
       const res = await fetch("https://revivir-mictlan.admon-9b5.workers.dev/", { method: "POST" });
