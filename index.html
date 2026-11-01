@@ -431,8 +431,193 @@ body::before {
 <audio id="heartbeat" src="assets/heartbeat.mp3" preload="auto"></audio>
 
 <div class="taskbar">
-  <button class="btn-back" onclick="goHome()">Inicio</button>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <button class="btn-back" onclick="goHome()">Inicio</button>
+    <button class="btn-back" onclick="openWindow('privacidad')">🔒 Privacidad</button>
+  </div>
   <span id="clock" class="clock-display"></span>
+</div>
+
+
+<!-- 🔒 Aviso de Privacidad -->
+<div id="privacidad" class="window">
+
+  <div class="window-header">
+    🔒 Aviso de Privacidad
+    <div class="window-close"
+         onclick="closeWindow('privacidad')">X</div>
+  </div>
+
+  <div class="window-content"
+       style="max-height:70vh; overflow-y:auto;
+              line-height:1.6; padding:18px;">
+
+    <h3 style="text-align:center;">
+      Aviso de Privacidad
+    </h3>
+
+    <p style="text-align:center;">
+      <b>Mictlán Fílmico</b><br>
+      Última actualización: 1 de noviembre de 2026
+    </p>
+
+    <h4>1. Responsable del tratamiento</h4>
+
+    <p>
+      Mictlán Fílmico es un proyecto cultural de exhibición
+      cinematográfica disponible en
+      https://mictlanfilmico.site.
+    </p>
+
+    <p>
+      El responsable del tratamiento de datos personales es
+      <b>Corpozaga, S.A. de C.V.</b>, con domicilio en
+      Calle General Mariano Escobedo 310, Colonia Centro,
+      C.P. 64000, Monterrey, Nuevo León, México.
+    </p>
+
+    <p>
+      Contacto:
+      <a href="mailto:admon@corpozaga.com">
+        admon@corpozaga.com
+      </a>
+    </p>
+
+    <h4>2. Información recopilada</h4>
+
+    <p>
+      Mictlán Fílmico no solicita registro, nombre o correo
+      electrónico para acceder a sus contenidos.
+    </p>
+
+    <p>
+      El sitio utiliza Google Analytics 4 para recopilar
+      información estadística sobre las visitas, incluyendo:
+    </p>
+
+    <ul>
+      <li>Visitas y duración de las sesiones.</li>
+      <li>Ubicación geográfica aproximada.</li>
+      <li>Tipo de dispositivo, navegador y sistema operativo.</li>
+      <li>Páginas consultadas y actividad de navegación.</li>
+      <li>Identificadores de cookies de analítica.</li>
+    </ul>
+
+    <p>
+      Google Analytics puede procesar direcciones IP, aunque
+      Google indica que GA4 no las registra ni almacena.
+    </p>
+
+    <h4>3. Finalidades del tratamiento</h4>
+
+    <p>
+      La información se utiliza para conocer el alcance del
+      proyecto, analizar de forma general el uso del sitio
+      y mejorar su funcionamiento y accesibilidad.
+    </p>
+
+    <p>
+      No utilizamos esta información para publicidad
+      personalizada ni para elaborar perfiles comerciales
+      individuales.
+    </p>
+
+    <h4>4. Cookies</h4>
+
+    <p>
+      El sitio utiliza cookies de Google Analytics, como
+      _ga y _ga_*, que permiten distinguir visitantes
+      y sesiones.
+    </p>
+
+    <p>
+      Puedes bloquear o eliminar estas cookies mediante
+      la configuración de tu navegador. También puedes
+      utilizar el
+      <a href="https://tools.google.com/dlpage/gaoptout"
+         target="_blank" rel="noopener noreferrer">
+        complemento de inhabilitación de Google Analytics
+      </a>.
+    </p>
+
+    <p>
+      Deshabilitar las cookies de analítica no impide
+      consultar el contenido del sitio.
+    </p>
+
+    <h4>5. Proveedores tecnológicos</h4>
+
+    <p>
+      Mictlán Fílmico utiliza GitHub Pages para su
+      alojamiento y Google Analytics 4 para la medición
+      estadística de visitas.
+    </p>
+
+    <p>
+      Estos proveedores pueden procesar información mediante
+      infraestructura ubicada fuera de México, de acuerdo
+      con sus respectivas políticas.
+    </p>
+
+    <p>
+      Puedes consultar información adicional en
+      <a href="https://policies.google.com/technologies/partner-sites"
+         target="_blank" rel="noopener noreferrer">
+        Cómo utiliza Google los datos
+      </a>.
+    </p>
+
+    <h4>6. Derechos ARCO</h4>
+
+    <p>
+      Conforme a la legislación mexicana, puedes solicitar
+      el acceso, rectificación, cancelación u oposición al
+      tratamiento de tus datos personales, así como revocar
+      tu consentimiento cuando corresponda.
+    </p>
+
+    <p>
+      Para ejercer estos derechos o solicitar información
+      sobre el tratamiento, escribe a
+      <a href="mailto:admon@corpozaga.com">
+        admon@corpozaga.com
+      </a>, indicando el derecho que deseas ejercer
+      y los datos necesarios para tramitar tu solicitud.
+    </p>
+
+    <p>
+      Las solicitudes se atenderán conforme a los
+      procedimientos y plazos previstos por la legislación
+      aplicable. Algunos datos asociados únicamente
+      con identificadores técnicos podrían no ser
+      vinculables con una persona determinada.
+    </p>
+
+    <h4>7. Modificaciones</h4>
+
+    <p>
+      Este aviso podrá actualizarse para reflejar cambios
+      en los servicios tecnológicos, el tratamiento
+      de información o la legislación aplicable.
+      Las modificaciones se publicarán en esta sección.
+    </p>
+
+    <hr>
+
+    <p style="text-align:center; font-style:italic;">
+      Mictlán Fílmico busca preservar y compartir
+      historias cinematográficas respetando
+      la privacidad de quienes las visitan.
+    </p>
+
+    <div style="text-align:center; margin-top:18px;">
+      <button class="btn-back"
+              onclick="closeWindow('privacidad')">
+        Cerrar
+      </button>
+    </div>
+
+  </div>
 </div>
 
 <!-- 🎥 Películas Reencarnadas -->
