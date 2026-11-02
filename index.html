@@ -455,7 +455,7 @@ body::before {
     <button class="btn-back" onclick="openWindow('privacidad')">🔒 Privacidad</button>
   </div>
   <div style="display:flex; align-items:center; gap:10px;">
-    <span style="font-size:11px; color:#555; white-space:nowrap;">v1.4.2</span>
+    <span style="font-size:11px; color:#555; white-space:nowrap;">v2.4.4</span>
     <span id="clock" class="clock-display"></span>
   </div>
 </div>
@@ -1601,15 +1601,13 @@ function mostrarToast(texto) {
   setTimeout(() => {
     try { flash.remove(); } catch (_) {}
 
-    // 🎥 Enlaces personalizados por título
-    // Añadir aquí los enlaces de las cinco películas nuevas cuando se proporcionen.
-    // Mientras tanto se conserva el enlace general de YouTube como alternativa.
+    // 🎥 Enlaces de las películas de la edición 2026
     const enlaces = {
-      "Marino y Esmeralda": "https://youtu.be/xB7_nj6GlGY",
-      "Rebeca": "https://youtu.be/ZJt0EsHiC0Y",
-      "Almas Rotas": "https://youtu.be/Jb_Eu7jimUI",
-      "Andrea en una Caja": "https://youtu.be/gXQKUKodZ_k",
-      "Moronga": "https://youtu.be/pCt_SROIztM"
+      "M-1": "",
+      "BONSAI": "https://youtu.be/d9qeDLs3Ado",
+      "MONSTRUOSAMENTE SOLO": "https://youtu.be/s-8elWZlgAM",
+      "EL SALMÓN": "https://youtu.be/LCSceWvwYLs",
+      "EL PEREGRINAR DEL BASTARDO": ""
     };
 
     const link = enlaces[titulo] || "https://www.youtube.com/channel/UCRnx5YBmJZU-NChYcrPPmQg";
