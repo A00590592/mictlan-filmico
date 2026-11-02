@@ -1629,14 +1629,22 @@ function mostrarToast(texto) {
   setTimeout(() => {
     try { flash.remove(); } catch (_) {}
 
-    // 🎥 Enlaces personalizados por título
-    const enlaces = {
-      "Marino y Esmeralda": "https://youtu.be/xB7_nj6GlGY",
-      "Rebeca": "https://youtu.be/ZJt0EsHiC0Y",
-      "Almas Rotas": "https://youtu.be/Jb_Eu7jimUI",
-      "Andrea en una Caja": "https://youtu.be/gXQKUKodZ_k",
-      "Moronga": "https://youtu.be/pCt_SROIztM"
-    };
+   // 🎥 Enlaces personalizados por título
+const enlaces = {
+  // Películas 2025
+  "Marino y Esmeralda": "https://youtu.be/xB7_nj6GlGY",
+  "Rebeca": "https://youtu.be/ZJt0EsHiC0Y",
+  "Almas Rotas": "https://youtu.be/Jb_Eu7jimUI",
+  "Andrea en una Caja": "https://youtu.be/gXQKUKodZ_k",
+  "Moronga": "https://youtu.be/pCt_SROIztM",
+
+  // Películas 2026
+  "M-1": "",
+  "BONSAI": "https://youtu.be/d9qeDLs3Ado",
+  "MONSTRUOSAMENTE SOLO": "https://youtu.be/s-8elWZlgAM",
+  "EL SALMÓN": "https://youtu.be/LCSceWvwYLs",
+  "EL PEREGRINAR DEL BASTARDO": ""
+};
 
     const link = enlaces[titulo] || "https://www.youtube.com/channel/UCRnx5YBmJZU-NChYcrPPmQg";
     mostrarVentanaAltar(titulo, link);
