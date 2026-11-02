@@ -320,11 +320,11 @@ body::before {
 /* 🎬 Alineación precisa de botones en ventanas de películas */
   
 /* 🕯️ Corrección final — apila Revivir sobre Volver en todas las ventanas y resoluciones */
-#MYEWin .btn-revivir,
-#rebecaWin .btn-revivir,
-#almasrotasWin .btn-revivir,
-#andreaWin .btn-revivir,
-#morongaWin .btn-revivir {
+#m1Win .btn-revivir,
+#bonsaiWin .btn-revivir,
+#monstruosamenteSoloWin .btn-revivir,
+#salmonWin .btn-revivir,
+#peregrinarWin .btn-revivir {
   display: block !important;
   width: auto !important;
   margin: 10px auto 6px auto !important;
@@ -332,11 +332,11 @@ body::before {
 }
 
 /* 🪞 Ajuste visual: descripciones de películas más grandes y justificadas */
-#MYEWin p,
-#rebecaWin p,
-#almasrotasWin p,
-#andreaWin p,
-#morongaWin p {
+#m1Win p,
+#bonsaiWin p,
+#monstruosamenteSoloWin p,
+#salmonWin p,
+#peregrinarWin p {
   font-size: 13px;
   text-align: justify;
   line-height: 1.55;
@@ -345,11 +345,11 @@ body::before {
 }
 
 /* 🔙 Alineación uniforme de los botones Volver en todas las ventanas de películas */  
-#MYEWin .btn-back,
-#rebecaWin .btn-back,
-#almasrotasWin .btn-back,
-#andreaWin .btn-back,
-#morongaWin .btn-back {
+#m1Win .btn-back,
+#bonsaiWin .btn-back,
+#monstruosamenteSoloWin .btn-back,
+#salmonWin .btn-back,
+#peregrinarWin .btn-back {
   display: block !important;
   width: auto !important;
   margin: 6px auto 10px auto !important;
@@ -455,7 +455,7 @@ body::before {
     <button class="btn-back" onclick="openWindow('privacidad')">🔒 Privacidad</button>
   </div>
   <div style="display:flex; align-items:center; gap:10px;">
-    <span style="font-size:11px; color:#555; white-space:nowrap;">v1.3.0</span>
+    <span style="font-size:11px; color:#555; white-space:nowrap;">v1.4.0</span>
     <span id="clock" class="clock-display"></span>
   </div>
 </div>
@@ -642,7 +642,7 @@ body::before {
   </div>
 </div>
 
-<!-- 🎥 Películas Reencarnadas -->
+<!-- 🎥 Películas Reencarnadas: edición actual 2026 -->
 <div id="peliculas" class="window">
   <div class="window-header">
     🎥 Películas Reencarnadas
@@ -650,92 +650,97 @@ body::before {
   </div>
   <div class="window-content">
     <div class="poster-grid">
-      <div class="poster-icon" onclick="openWindow('MYEWin')">
-        <img src="assets/MYE_16v.png" alt="Marino y Esmeralda 16-bit">
-        <p>Marino y Esmeralda</p>
+      <div class="poster-icon" onclick="openWindow('m1Win')">
+        <!-- Cambia el nombre del archivo si la imagen real tiene otro nombre. -->
+        <img src="assets/2026/m-1_16v.png" alt="Cartel de M-1">
+        <p>M-1</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('rebecaWin')">
-        <img src="assets/rebeca_16v.png" alt="Rebeca 16-bit">
-        <p>Rebeca</p>
+      <div class="poster-icon" onclick="openWindow('bonsaiWin')">
+        <!-- Cambia el nombre del archivo si la imagen real tiene otro nombre. -->
+        <img src="assets/2026/bonsai_16v.png" alt="Cartel de BONSAI">
+        <p>BONSAI</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('almasrotasWin')">
-        <img src="assets/almasrotas_16v.png" alt="Almas Rotas 16-bit">
-        <p>Almas Rotas</p>
+      <div class="poster-icon" onclick="openWindow('monstruosamenteSoloWin')">
+        <!-- Cambia el nombre del archivo si la imagen real tiene otro nombre. -->
+        <img src="assets/2026/monstruosamente-solo_16v.png" alt="Cartel de MONSTRUOSAMENTE SOLO">
+        <p>MONSTRUOSAMENTE SOLO</p>
       </div>
-      <div class="poster-icon" onclick="openWindow('andreaWin')">
-        <img src="assets/andrea_16v.png" alt="Andrea en una Caja 16-bit">
-        <p>Andrea en una Caja</p>
-      </div>  
-      <div class="poster-icon" onclick="openWindow('morongaWin')">
-        <img src="assets/morgana_16v.png" alt="Moronga 16-bit">
-        <p>Mogonga</p>
-      </div>  
+      <div class="poster-icon" onclick="openWindow('salmonWin')">
+        <!-- Cambia el nombre del archivo si la imagen real tiene otro nombre. -->
+        <img src="assets/2026/el-salmon_16v.png" alt="Cartel de EL SALMÓN">
+        <p>EL SALMÓN</p>
+      </div>
+      <div class="poster-icon" onclick="openWindow('peregrinarWin')">
+        <!-- Cambia el nombre del archivo si la imagen real tiene otro nombre. -->
+        <img src="assets/2026/el-peregrinar-del-bastardo_16v.png" alt="Cartel de EL PEREGRINAR DEL BASTARDO">
+        <p>EL PEREGRINAR DEL BASTARDO</p>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 🪔 Subventanas con botón Volver -->
-<div id="MYEWin" class="window">
-  <div class="window-header">Marino y Esmeralda <div class="window-close" onclick="closeWindow('MYEWin')">X</div></div>
+<!-- 🪔 Subventanas de la edición actual -->
+<div id="m1Win" class="window">
+  <div class="window-header">M-1 <div class="window-close" onclick="closeWindow('m1Win')">X</div></div>
   <div class="window-content" style="text-align:center;">
-    <img src="assets/MYE.png" width="240" alt="Marino y Esmeralda"><br><br>
-    <p>Marino, 18, un joven estudiante foráneo de cine, conoce a Esmeralda, 20, 
-       estudiante y artista plástica en quien encuentra la musa que siempre quiso para sus cámaras. 
-       Ingenuo, descubre poco a poco que Esmeralda es mucho más que sólo eso... y pronto se ve a sí mismo
-       queriendo ser lo que ella es para él: su “muso”.</p>
-    <button class="btn-revivir" onclick="revivirLuz('Marino y Esmeralda')">✨ Revivir</button>
-    <button onclick="closeWindow('MYEWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+    <!-- Imagen principal esperada en assets/2026/ -->
+    <img src="assets/2026/m-1.png" width="240" alt="M-1"><br><br>
+    <p><b>Dirección:</b> Luciano Pérez Savoy</p>
+    <p><b>2017 · 1h 15m</b></p>
+    <p>“M” cruza la ciudad a través de la noche y dibuja el retrato de un Sarajevo desconocido. Un retrato que es también un afectuoso gesto de despedida del director a la ciudad donde estudió cine.</p>
+    <button class="btn-revivir" onclick="revivirLuz('M-1')">✨ Revivir</button>
+    <button onclick="closeWindow('m1Win'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
   </div>
 </div>
 
-<div id="rebecaWin" class="window">
-  <div class="window-header">Rebeca <div class="window-close" onclick="closeWindow('rebecaWin')">X</div></div>
+<div id="bonsaiWin" class="window">
+  <div class="window-header">BONSAI <div class="window-close" onclick="closeWindow('bonsaiWin')">X</div></div>
   <div class="window-content" style="text-align:center;">
-    <img src="assets/rebeca.png" width="240" alt="Rebeca"><br><br>
-    <p>Viviana de la Torre, una actriz de 43 años de larga carrera, vive en San Juan de los Lagos,
-       Jalisco, México. Se cuestiona cada vez más el sentido de su oficio y, con ello, su lugar en el
-       mundo. En medio de un vendaval de memorias y de problemas cotidianos, una modesta oportunidad de 
-       trabajo en la Ciudad de México surge... suficiente para poner a prueba el ahínco que merecen sus sueños.</p>
-    <button class="btn-revivir" onclick="revivirLuz('Rebeca')">✨ Revivir</button>
-    <button onclick="closeWindow('rebecaWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+    <!-- Imagen principal esperada en assets/2026/ -->
+    <img src="assets/2026/bonsai.png" width="240" alt="BONSAI"><br><br>
+    <p><b>Dirección:</b> Alexander Andonie</p>
+    <p>Sinopsis pendiente.</p>
+    <button class="btn-revivir" onclick="revivirLuz('BONSAI')">✨ Revivir</button>
+    <button onclick="closeWindow('bonsaiWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
   </div>
 </div>
 
-<div id="almasrotasWin" class="window">
-  <div class="window-header">Almas Rotas <div class="window-close" onclick="closeWindow('almasrotasWin')">X</div></div>
+<div id="monstruosamenteSoloWin" class="window">
+  <div class="window-header">MONSTRUOSAMENTE SOLO <div class="window-close" onclick="closeWindow('monstruosamenteSoloWin')">X</div></div>
   <div class="window-content" style="text-align:center;">
-    <img src="assets/almasrotas.png" width="240" alt="Almas Rotas"><br><br>
-    <p>Julián decide abandonarlo todo y emprender un viaje sin destino. 
-       Diez años después regresa en busca de su pasado y encuentra a María, 
-       la que una vez fuera su mujer, acompañada de Santiago, un escritor en quien ella ha encontrado un refugio. 
-       La llegada de Julián le da un nuevo e inesperado rumbo a la vida de los tres.</p>
-    <button class="btn-revivir" onclick="revivirLuz('Almas Rotas')">✨ Revivir</button>
-    <button onclick="closeWindow('almasrotasWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+    <!-- Imagen principal esperada en assets/2026/ -->
+    <img src="assets/2026/monstruosamente-solo.png" width="240" alt="MONSTRUOSAMENTE SOLO"><br><br>
+    <p><b>Dirección:</b> Enrique Cruz</p>
+    <p><b>2021 · 1h 26m</b></p>
+    <p>Abandonado por el amor de su vida, Santiago recibirá ayuda de las personas que lo aman, incluso de un monstruo imaginario de su infancia que lo hará cuestionarse sobre el valor del amor y la amistad. ¿Logrará recuperar a su amada?</p>
+    <button class="btn-revivir" onclick="revivirLuz('MONSTRUOSAMENTE SOLO')">✨ Revivir</button>
+    <button onclick="closeWindow('monstruosamenteSoloWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
   </div>
 </div>
 
-  <div id="andreaWin" class="window">
-  <div class="window-header">Andrea en una Caja <div class="window-close" onclick="closeWindow('andreaWin')">X</div></div>
+<div id="salmonWin" class="window">
+  <div class="window-header">EL SALMÓN <div class="window-close" onclick="closeWindow('salmonWin')">X</div></div>
   <div class="window-content" style="text-align:center;">
-    <img src="assets/andrea.png" width="240" alt="Andrea en una Caja"><br><br>
-    <p>Patricia y Andrea tienen una discusión sobre su vida en pareja, lo cual pone su relación
-       en un limbo. Patricia sale en viaje de trabajo, Andrea toma una decisión que podrá
-       cambiar de forma irreversible sus vidas</p>
-    <button class="btn-revivir" onclick="revivirLuz('Andrea en una Caja')">✨ Revivir</button>
-    <button onclick="closeWindow('andreaWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+    <!-- Imagen principal esperada en assets/2026/ -->
+    <img src="assets/2026/el-salmon.png" width="240" alt="EL SALMÓN"><br><br>
+    <p><b>Dirección:</b> Janett Juárez y Ricardo Serna</p>
+    <p><b>2015 · 1h 21m</b></p>
+    <p>Félix es un excéntrico artista y bailarín en busca de realizar su siguiente proyecto. Todo se complica cuando tiene que lidiar con los problemas y responsabilidades de la vida diaria y una serie de eventos desafortunados que le ocurren en su camino.</p>
+    <button class="btn-revivir" onclick="revivirLuz('EL SALMÓN')">✨ Revivir</button>
+    <button onclick="closeWindow('salmonWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
   </div>
 </div>
 
-  <div id="morongaWin" class="window">
-  <div class="window-header">Moronga <div class="window-close" onclick="closeWindow('morongaWin')">X</div></div>
+<div id="peregrinarWin" class="window">
+  <div class="window-header">EL PEREGRINAR DEL BASTARDO <div class="window-close" onclick="closeWindow('peregrinarWin')">X</div></div>
   <div class="window-content" style="text-align:center;">
-    <img src="assets/morgana.png" width="240" alt="Moronga"><br><br>
-    <p>Sur de México. Días de Muertos. Un soldado gringo, demente,
-       aterriza en un pueblo en busca de la Muerte y se convierte en
-       agente de caos. Solo Marilyn, su coyote coqueto, le puede
-       enseñar el camino...</p>
-    <button class="btn-revivir" onclick="revivirLuz('Moronga')">✨ Revivir</button>
-    <button onclick="closeWindow('morongaWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
+    <!-- Imagen principal esperada en assets/2026/ -->
+    <img src="assets/2026/el-peregrinar-del-bastardo.png" width="240" alt="EL PEREGRINAR DEL BASTARDO"><br><br>
+    <p><b>Dirección:</b> Narce Ruiz</p>
+    <p><b>2017 · 3 min</b></p>
+    <p>Documental etnográfico a manera de honrar la memoria del padre de la directora.</p>
+    <button class="btn-revivir" onclick="revivirLuz('EL PEREGRINAR DEL BASTARDO')">✨ Revivir</button>
+    <button onclick="closeWindow('peregrinarWin'); openWindow('peliculas')" class="btn-back">⬅ Volver</button>
   </div>
 </div>
 
@@ -764,34 +769,31 @@ body::before {
       </p>
 
       <p>
-        En este altar encontrarás cinco películas mexicanas seleccionadas por su riqueza narrativa 
-        y su tránsito discreto por festivales y salas alternativas:
+        En esta edición del altar encontrarás cinco películas:
       </p>
 
       <ul style="list-style-type: none; padding-left: 0; line-height: 1.6;">
-        <li><b>Almas Rotas</b> (dir. Juan Pablo Arroyo)</li>
-        <li><b>Andrea en una caja</b> (dir. Adrián González Camargo)</li>
-        <li><b>Marino y Esmeralda</b> (dir. Luis R. Garza)</li>
-        <li><b>Moronga</b> (dir. John Dickie)</li>
-        <li><b>Rebeca</b> (dir. Luis R. Garza)</li>
+        <li><b>M-1</b> (dir. Luciano Pérez Savoy)</li>
+        <li><b>BONSAI</b> (dir. Alexander Andonie)</li>
+        <li><b>MONSTRUOSAMENTE SOLO</b> (dir. Enrique Cruz)</li>
+        <li><b>EL SALMÓN</b> (dir. Janett Juárez y Ricardo Serna)</li>
+        <li><b>EL PEREGRINAR DEL BASTARDO</b> (dir. Narce Ruiz)</li>
       </ul>
 
       <p>
-        Ninguna de estas películas está presente en plataformas de streaming masivo. 
+        Estas películas forman parte de la edición actual del altar. 
         Aquí, en cambio, reaparecen como presencias luminosas: cada interacción envía una chispa que mantiene encendida 
         la llama del cine nacional.
       </p>
 
       <p>
-        Todas las películas se encuentran disponibles de forma libre en nuestro canal de <b>YouTube</b>. 
-        Para acceder a cada una, es necesario dar clic en <b>✨ Revivir</b>, lo cual activará tanto su proyección digital 
-        como una señal luminosa en el altar físico. Al finalizar el ritual, también podrás <b>compartir el enlace</b> 
-        para guardarlo y verlo más tarde en el dispositivo de tu elección.
+        Los enlaces individuales de reproducción de esta edición están pendientes de incorporación. 
+        El botón <b>✨ Revivir</b> activa el ritual y, mientras tanto, dirige al canal general de YouTube.
       </p>
 
       <p>
         Esperamos que disfrutes estas películas y las compartas con quienes también creen que el cine mexicano 
-        merece seguir encendiéndose. Las películas estarán disponibles hasta el <b>7 de diciembre</b>.
+        merece seguir encendiéndose. Consulta este altar para conocer la disponibilidad de esta edición.
       </p>
 
       <p>
@@ -856,11 +858,11 @@ body::before {
 
       <p>En este altar encontrarás cinco películas mexicanas:</p>
       <ul style="list-style-type: none; padding-left: 0; line-height: 1.6;">
-        <li><b>Almas Rotas</b> — Dir. Juan Pablo Arroyo</li>
-        <li><b>Andrea en una Caja</b> — Dir. Adrián González Camargo</li>
-        <li><b>Marino y Esmeralda</b> — Dir. Luis R. Garza</li>
-        <li><b>Moronga</b> — Dir. John Dickie</li>
-        <li><b>Rebeca</b> — Dir. Luis R. Garza</li>
+        <li><b>M-1</b> — Dir. Luciano Pérez Savoy</li>
+        <li><b>BONSAI</b> — Dir. Alexander Andonie</li>
+        <li><b>MONSTRUOSAMENTE SOLO</b> — Dir. Enrique Cruz</li>
+        <li><b>EL SALMÓN</b> — Dir. Janett Juárez y Ricardo Serna</li>
+        <li><b>EL PEREGRINAR DEL BASTARDO</b> — Dir. Narce Ruiz</li>
       </ul>
 
       <p><b>Investigación</b><br>
@@ -1583,6 +1585,8 @@ function mostrarToast(texto) {
     try { flash.remove(); } catch (_) {}
 
     // 🎥 Enlaces personalizados por título
+    // Añadir aquí los enlaces de las cinco películas nuevas cuando se proporcionen.
+    // Mientras tanto se conserva el enlace general de YouTube como alternativa.
     const enlaces = {
       "Marino y Esmeralda": "https://youtu.be/xB7_nj6GlGY",
       "Rebeca": "https://youtu.be/ZJt0EsHiC0Y",
